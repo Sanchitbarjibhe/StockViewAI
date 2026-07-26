@@ -1,50 +1,48 @@
 import { NextResponse } from 'next/server';
 
-const nseHeaders = {
+const NSE_BASE_URL = 'https://www.nseindia.com';
+
+const headers = {
     'User-Agent':
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept': '*/*',
     'Accept-Language': 'en-US,en;q=0.9',
-    'Referer': 'https://www.nseindia.com',
+    'Referer': NSE_BASE_URL,
 };
 
-async function getNSEData(url: string) {
-    try {
-        // NSE वरून Session Cookie जनरेट करणे
-        const initRes = await fetch('https://www.nseindia.com', { headers: nseHeaders });
-        const cookies = initRes.headers.get('set-cookie') || '';
+async function getNSECookies() {
+    // 1. Session cookies मिळवण्यासाठी मुख्य साइटवर पहिली रिक्वेस्ट करणे
+    const response = await fetch(NSE_BASE_URL, { headers });
+    const rawCookies = response.headers.get('set-cookie');
 
-        const res = await fetch(url, {
-            headers: {
-                ...nseHeaders,
-                'Cookie': cookies,
-            },
-        });
+    if (!rawCookies) return '';
 
-        if (!res.ok) return null;
-        return await res.json();
-    } catch (err) {
-        console.error(`NSE Fetch Error for ${url}:`, err);
-        return null;
-    }
+    // Cookies काढणे
+    const cookies = rawCookies
+        .split(',')
+        .map((c) => c.split(';')[0])
+        .join('; ');
+
+    return cookies;
 }
 
 export async function GET() {
     try {
+        const cookies = await getNSECookies();
+        const apiHeaders = { ...headers, 'Cookie': cookies };
+
         // ⚡ Fast Performance साठी सर्व NSE endpoints समांतर (Parallelly) कॉल करणे
-        const [
-            indicesData,
-            gainersData,
-            losersData,
-            volumeGainersData,
-            goldData,
-        ] = await Promise.all([
-            getNSEData('https://www.nseindia.com/api/allIndices'),
-            getNSEData('https://www.nseindia.com/api/live-analysis-variations?index=gainers&key=NIFTY'),
-            getNSEData('https://www.nseindia.com/api/live-analysis-variations?index=losers&key=NIFTY'),
-            getNSEData('https://www.nseindia.com/api/live-analysis-volume-gainers'),
-            getNSEData('https://www.nseindia.com/api/quote-commodity?symbol=GOLD'),
+        const responses = await Promise.all([
+            fetch('https://www.nseindia.com/api/allIndices', { headers: apiHeaders, next: { revalidate: 10 } }),
+            fetch('https://www.nseindia.com/api/live-analysis-variations?index=gainers&key=NIFTY500', { headers: apiHeaders, next: { revalidate: 10 } }),
+            fetch('https://www.nseindia.com/api/live-analysis-variations?index=losers&key=NIFTY500', { headers: apiHeaders, next: { revalidate: 10 } }),
+            fetch('https://www.nseindia.com/api/live-analysis-volume-gainers', { headers: apiHeaders, next: { revalidate: 10 } }),
+            fetch('https://www.nseindia.com/api/quote-commodity?symbol=GOLD', { headers: apiHeaders, next: { revalidate: 10 } }),
         ]);
+
+        const [indicesData, gainersData, losersData, volumeGainersData, goldData] = await Promise.all(
+            responses.map(res => res.ok ? res.json() : null)
+        );
 
         const allIndices = indicesData?.data || [];
 
@@ -85,7 +83,7 @@ export async function GET() {
 
         // 3. Top Price Gainers (Nifty List)
         const topGainers =
-            gainersData?.NIFTY?.data?.slice(0, 4).map((item: any) => ({
+            gainersData?.NIFTY500?.data?.slice(0, 4).map((item: any) => ({
                 symbol: item.symbol,
                 price: `₹${item.ltp}`,
                 change: `+${item.pChange?.toFixed(2)}%`,
@@ -94,7 +92,7 @@ export async function GET() {
 
         // 4. Top Price Losers (Nifty List)
         const topLosers =
-            losersData?.NIFTY?.data?.slice(0, 4).map((item: any) => ({
+            losersData?.NIFTY500?.data?.slice(0, 4).map((item: any) => ({
                 symbol: item.symbol,
                 price: `₹${item.ltp}`,
                 change: `${item.pChange?.toFixed(2)}%`,
