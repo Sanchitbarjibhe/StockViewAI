@@ -7,6 +7,46 @@ body {
   color: #e2e8f0;
   margin: 0;
   padding: 0;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.home-shell {
+  background-color: #05080E;
+  min-height: 100vh;
+  color: #E2E8F0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.home-content {
+  width: 100%;
+  max-width: 980px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+}
+
+.home-glow {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse at top, rgba(34, 197, 94, 0.15), transparent 70%);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.home-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .glass-card {
@@ -38,8 +78,10 @@ body {
 
 .marquee-track {
   display: flex;
-  width: 200%;
-  animation: marquee 20s linear infinite;
+  width: max-content;
+  min-width: max-content;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
 }
 
 .marquee-track:hover {

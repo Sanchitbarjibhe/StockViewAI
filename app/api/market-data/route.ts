@@ -33,11 +33,7 @@ export async function GET() {
 
         // ⚡ Fast Performance साठी सर्व NSE endpoints समांतर (Parallelly) कॉल करणे
         const responses = await Promise.all([
-            fetch('https://www.nseindia.com/api/allIndices', { headers: apiHeaders, next: { revalidate: 10 } }),
-            fetch('https://www.nseindia.com/api/live-analysis-variations?index=gainers&key=NIFTY500', { headers: apiHeaders, next: { revalidate: 10 } }),
-            fetch('https://www.nseindia.com/api/live-analysis-variations?index=losers&key=NIFTY500', { headers: apiHeaders, next: { revalidate: 10 } }),
-            fetch('https://www.nseindia.com/api/live-analysis-volume-gainers', { headers: apiHeaders, next: { revalidate: 10 } }),
-            fetch('https://www.nseindia.com/api/quote-commodity?symbol=GOLD', { headers: apiHeaders, next: { revalidate: 10 } }),
+            fetch('https://www.nseindia.com/api/allIndices', { headers: apiHeaders, next: { revalidate: 10 } }), // CORRECT API FOR SECTOR AND INDEX DATA
         ]);
 
         const [indicesData, gainersData, losersData, volumeGainersData, goldData] = await Promise.all(
