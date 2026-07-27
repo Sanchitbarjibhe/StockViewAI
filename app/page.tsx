@@ -1,24 +1,17 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import LandingPage from '@/components/landing/LandingPage';
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    // LocalStorage किंवा API मधून लॉगइन स्टेटस चेक करा
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-    setLoading(false);
-  }, []);
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
 
-  if (loading) return <p>Loading...</p>;
-
+  const isLoggedIn = !!session;
 
   return (
     // Main shell for the dashboard page layout.

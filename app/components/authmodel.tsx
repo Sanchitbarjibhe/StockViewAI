@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { X, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 
 interface AuthModalProps {
     isOpen: boolean;
@@ -76,8 +77,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     };
 
     const handleGoogleLogin = () => {
-        console.log('Initiating Google Login...');
-        // NextAuth / Clerk Google AuthTrigger
+        signIn('google', { callbackUrl: '/' });
     };
 
     const handleBrokerLogin = () => {

@@ -9,13 +9,6 @@ import AuthModal from '@/components/authmodel';
 export default function LandingPage() {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
 
-    const handleAuthSuccess = (email: string) => {
-        const token = `neo-${Date.now()}`;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userEmail', email);
-        window.location.reload();
-    };
-
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-purple-500 selection:text-white" style={{ backgroundColor: '#020617', color: '#f8fafc', minHeight: '100vh' }}>
             {/* 1. Header Navigation */}
@@ -32,7 +25,6 @@ export default function LandingPage() {
             <AuthModal
                 isOpen={isAuthOpen}
                 onClose={() => setIsAuthOpen(false)}
-                onSuccessLogin={handleAuthSuccess}
             />
         </div>
     );

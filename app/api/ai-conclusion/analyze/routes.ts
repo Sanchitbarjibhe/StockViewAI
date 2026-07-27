@@ -1,7 +1,7 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { decryptKey } from 'lib/encryption';
+import { decryptKey } from '@/lib/encryption';
 import { getUserFromSession } from '@/lib/auth'; // NextAuth Session
 
 export async function POST(req: NextRequest) {
