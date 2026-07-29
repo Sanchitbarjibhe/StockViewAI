@@ -38,15 +38,26 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                     </button>
                 </form>
 
+
                 {isAuthenticated ? (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ color: '#94A3B8', fontSize: '11px' }}>{userEmail || 'Trader'}</span>
-                        <button type="button" onClick={onLogout} style={{ padding: '6px 12px', cursor: 'pointer', backgroundColor: 'transparent', border: '1px solid #334155', color: '#F8FAFC', borderRadius: '8px', fontSize: '10px', fontWeight: '700' }}>
-                            LOG OUT
+                        <span style={{ color: '#94A3B8', fontSize: '11px' }}>
+                            {userEmail || 'Trader'}
+                        </span>
+                        <button
+                            type="button"
+                            onClick={onLogout}
+                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium transition"
+                        >
+                            Logout
                         </button>
                     </div>
                 ) : (
-                    <button type="button" onClick={onOpenAuth} style={{ padding: '6px 12px', cursor: 'pointer', backgroundColor: '#22C55E', color: '#0B0F17', border: 'none', borderRadius: '8px', fontSize: '10px', fontWeight: '800' }}>
+                    <button
+                        type="button"
+                        onClick={onOpenAuth}
+                        style={{ padding: '6px 12px', cursor: 'pointer', backgroundColor: '#22C55E', color: '#000F17' }}
+                    >
                         LOG IN
                     </button>
                 )}

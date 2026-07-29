@@ -9,6 +9,11 @@ if (!MONGODB_URI) {
 let cached = (global as any).mongoose || { conn: null, promise: null };
 
 export async function dbConnect() {
+    // dbConnect.ts मध्ये:
+    await mongoose.connect(process.env.MONGODB_URI!, {
+        dbName: 'neoterminal' // <-- इथे तुझ्या आवडीचे DB नेम टाक
+    });
+
     if (cached.conn) return cached.conn;
 
     if (!cached.promise) {

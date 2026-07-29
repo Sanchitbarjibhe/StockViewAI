@@ -1,9 +1,6 @@
-import type { NextConfig } from 'next'
-
-const nextConfig: NextConfig = {
-  experimental: {
-    // useTypeScriptCli: true,
+const nextConfig = {
+  turbopack: {
+    root: process.cwd(),
   },
-}
-
-export default nextConfig
+};
+export default nextConfig;

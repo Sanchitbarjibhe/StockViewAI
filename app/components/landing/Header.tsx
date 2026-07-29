@@ -1,3 +1,5 @@
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import React from 'react';
 
 interface HeaderProps {
@@ -16,13 +18,17 @@ export default function Header({ onOpenAuth }: HeaderProps) {
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                 <a href="#features" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }}>Features</a>
                 <a href="#pricing" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }}>Pricing</a>
-                <button
+
+                {/* <Link href="/auth/login" className="btn-primary">
+                    Login / Sign Up
+                </Link> */}
+                {/* <button
                     type="button"
                     onClick={onOpenAuth}
                     style={{ backgroundColor: '#0f172a', border: '1px solid #334155', color: '#fff', padding: '8px 16px', borderRadius: '8px', cursor: 'pointer' }}
                 >
                     Login
-                </button>
+                </button> */}
             </div>
         </nav>
     );

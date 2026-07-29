@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import PinnedIndices from './PinnedIndices';
 import Header from './Header';
 import ActiveStocks from './ActiveStocks';
@@ -8,7 +10,6 @@ import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
 import AiPromptBar from './AiPromptBar';
-import AuthModal from '@/components/authmodel';
 
 interface IndexData {
     name: string;
@@ -53,33 +54,20 @@ export default function DashboardLayout() {
     const [loadingMarketData, setLoadingMarketData] = useState<boolean>(true);
     const [selectedIndices, setSelectedIndices] = useState<string[]>(['NIFTY 50', 'NIFTY BANK', 'NIFTY FINANCIAL SERVICES', 'NIFTY 500', 'NIFTY 200', 'NIFTY 100', 'NIFTY MID SELECT']);
     const [isAuthOpen, setIsAuthOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
+    const { data: session, status } = useSession();
+    const router = useRouter();
 
-    useEffect(() => {
-        const savedToken = localStorage.getItem('token');
-        const savedEmail = localStorage.getItem('userEmail');
+    const isAuthenticated = status === 'authenticated';
+    const userEmail = session?.user?.email ?? '';
 
-        if (savedToken) {
-            setIsAuthenticated(true);
-            if (savedEmail) setUserEmail(savedEmail);
-        }
-    }, []);
-
-    const handleAuthSuccess = (email: string) => {
-        const token = `neo-${Date.now()}`;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userEmail', email);
-        setUserEmail(email);
-        setIsAuthenticated(true);
-        setIsAuthOpen(false);
+    const handleOpenAuth = () => {
+        router.push('/login');
     };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
-        setIsAuthenticated(false);
-        setUserEmail('');
+        signOut({ callbackUrl: '/' });
     };
 
     // -------------------- Data fetching --------------------
@@ -244,7 +232,7 @@ export default function DashboardLayout() {
                 handleSearch={handleSearch}
                 isAuthenticated={isAuthenticated}
                 userEmail={userEmail}
-                onOpenAuth={() => setIsAuthOpen(true)}
+                onOpenAuth={handleOpenAuth}
                 onLogout={handleLogout}
             />
 
@@ -282,11 +270,11 @@ export default function DashboardLayout() {
                 quickChips={quickChips} // from state
             />
 
-            <AuthModal
+            {/* <AuthModal
                 isOpen={isAuthOpen}
                 onClose={() => setIsAuthOpen(false)}
                 onSuccessLogin={handleAuthSuccess}
-            />
+            /> */}
         </>
     );
 }

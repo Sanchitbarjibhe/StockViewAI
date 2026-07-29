@@ -3,21 +3,48 @@
 import React, { useState } from 'react';
 
 interface FormDataState {
+  name: string;
   email: string;
   phone: string;
 }
 
 export default function Hero() {
-  const [formData, setFormData] = useState<FormDataState>({ email: '', phone: '' });
+  const [formData, setFormData] = useState<FormDataState>({ name: '', email: '', phone: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(`Registration Successful!\nEmail: ${formData.email}\nPhone: ${formData.phone}`);
+    setIsLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/mvpentry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setMessage('✅ Registration successful! Welcome aboard.');
+        setFormData({ name: '', email: '', phone: '' }); // Reset form
+      } else {
+        setMessage(`❌ Error: ${result.message || 'An unknown error occurred.'}`);
+      }
+    } catch (error) {
+      setMessage('❌ Failed to connect to the server. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,6 +71,15 @@ export default function Hero() {
       <div style={{ maxWidth: '420px', margin: '0 auto', backgroundColor: '#0f172a', border: '1px solid #1e293b', padding: '28px', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)' }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <input
+            type="text"
+            name="name"
+            required
+            placeholder="Enter your Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            style={{ width: '100%', backgroundColor: '#020617', border: '1px solid #334155', color: '#f8fafc', padding: '12px 16px', borderRadius: '10px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+          />
+          <input
             type="email"
             name="email"
             required
@@ -63,14 +99,18 @@ export default function Hero() {
           />
           <button
             type="submit"
-            style={{ width: '100%', background: 'linear-gradient(to right, #9333ea, #059669)', color: '#ffffff', fontWeight: '600', padding: '12px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontSize: '14px', marginTop: '6px' }}
+            disabled={isLoading}
+            style={{ width: '100%', background: 'linear-gradient(to right, #9333ea, #059669)', color: '#ffffff', fontWeight: '600', padding: '12px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontSize: '14px', marginTop: '6px', opacity: isLoading ? 0.6 : 1 }}
           >
-            Start Free AI Trial →
+            {isLoading ? 'Registering...' : 'Start Free AI Trial →'}
           </button>
         </form>
-        <p style={{ fontSize: '11px', color: '#64748b', marginTop: '12px', textAlign: 'center' }}>
+        {message && (
+          <p style={{ fontSize: '12px', color: message.startsWith('❌') ? '#fca5a5' : '#86efac', marginTop: '12px', textAlign: 'center' }}>{message}</p>
+        )}
+        {!message && (<p style={{ fontSize: '11px', color: '#64748b', marginTop: '12px', textAlign: 'center' }}>
           ⚡ Instant 3-day free access. No credit card required.
-        </p>
+        </p>)}
       </div>
     </section>
   );

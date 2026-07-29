@@ -1,0 +1,16 @@
+
+> neo-trading-terminal@0.1.0 build
+> next build
+
+▲ Next.js 16.2.11 (Turbopack)
+- Environments: .env.local
+
+
+> Build error occurred
+Error: EPERM: operation not permitted, mkdir 'F:\neo-trading-terminal\.next\types'
+    at ignore-listed frames {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'mkdir',
+  path: 'F:\\neo-trading-terminal\\.next\\types'
+}
