@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     try {
         await connectToMongoDB();
 
-        console.log("✅ MongoDB Connected Successfully!"); // Terminal वर दिसेल
+        console.log("✅ MongoDB Connected Successfully!");
 
         const body = await request.json();
         console.log("📥 Received Data from Frontend:", body);
