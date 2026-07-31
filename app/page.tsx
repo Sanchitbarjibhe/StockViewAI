@@ -3,6 +3,8 @@
 import { useSession } from 'next-auth/react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import LandingPage from '@/components/landing/LandingPage';
+import MvpPage from './components/mvp/Mvppage';
+
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -28,6 +30,6 @@ export default function Home() {
         </div>
       </div>
       :
-      <LandingPage />
+      <><LandingPage /> <MvpPage /></>
   );
 }

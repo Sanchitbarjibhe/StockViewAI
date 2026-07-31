@@ -1,5 +1,5 @@
 // app/api/test-db/route.ts
-import { connectToMongoDB } from "@/lib/db";
+import { connectToMongoDB } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
 export async function GET() {

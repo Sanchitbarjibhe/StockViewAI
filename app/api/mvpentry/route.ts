@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connectToMongoDB } from '@/lib/db';
+import { connectToMongoDB } from '@/lib/dbConnect';
 import Mvpentry from 'models/mvpentry';
 
 

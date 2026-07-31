@@ -11,7 +11,7 @@ export default function MvpPage() {
     // const [isAuthOpen, setIsAuthOpen] = useState(false);
 
     return (
-        <div className="scanlines antialiased min-h-screen selection:bg-purple-500 selection:text-white">
+        <div className="mvp-root scanlines min-h-screen w-full bg-mvp-void text-mvp-ink font-mono antialiased" suppressHydrationWarning>
             <TickerTape />
             <HeroIndices />
             <SectorHeatmap />
