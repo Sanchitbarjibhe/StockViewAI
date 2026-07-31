@@ -4,6 +4,7 @@ import Hero from './Hero';
 import Features from './Features';
 import Pricing from './Pricing';
 import Footer from './Footer';
+import AuthModal from '../authmodel';
 
 export default function LandingPage() {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -20,6 +21,9 @@ export default function LandingPage() {
             <Pricing />
             {/* Footer */}
             <Footer />
+
+            {/* Auth Modal */}
+            <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
         </div>
     );
 }

@@ -10,6 +10,7 @@ import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
 import AiPromptBar from './AiPromptBar';
+import AuthModal from '../authmodel';
 
 interface IndexData {
     name: string;
@@ -68,6 +69,11 @@ export default function DashboardLayout() {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
         signOut({ callbackUrl: '/' });
+    };
+
+    const handleAuthSuccess = (email: string) => {
+        console.log(`Auth success for ${email} from within dashboard modal.`);
+        setIsAuthOpen(false); // Close the modal on success
     };
 
     // -------------------- Data fetching --------------------
@@ -270,11 +276,11 @@ export default function DashboardLayout() {
                 quickChips={quickChips} // from state
             />
 
-            {/* <AuthModal
+            <AuthModal
                 isOpen={isAuthOpen}
                 onClose={() => setIsAuthOpen(false)}
                 onSuccessLogin={handleAuthSuccess}
-            /> */}
+            />
         </>
     );
 }
