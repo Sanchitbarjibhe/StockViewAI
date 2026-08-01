@@ -196,9 +196,9 @@ export default function DashboardLayout() {
             });
             const data = await res.json();
             if (data.success) setAiResponse(data.conclusion);
-            else setAiResponse("त्रुटी: उत्तर मिळवता आले नाही.");
+            else setAiResponse("Error: Could not retrieve a response.");
         } catch (err) {
-            setAiResponse("सर्व्हर एरर: बॅकएंडशी संपर्क होऊ शकला नाही.");
+            setAiResponse("Server Error: Could not connect to the backend.");
         } finally {
             setLoading(false);
             setPrompt("");
