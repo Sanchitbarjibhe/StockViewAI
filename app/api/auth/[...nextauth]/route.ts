@@ -3,11 +3,19 @@ import GoogleProvider from "next-auth/providers/google";
 import { connectToMongoDB } from '@/lib/dbConnect';
 import User from "models/user";
 
+if (!process.env.GOOGLE_CLIENT_ID) {
+    throw new Error("Missing GOOGLE_CLIENT_ID environment variable");
+}
+
+if (!process.env.GOOGLE_CLIENT_SECRET) {
+    throw new Error("Missing GOOGLE_CLIENT_SECRET environment variable");
+}
+
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID as string,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
     callbacks: {

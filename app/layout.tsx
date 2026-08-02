@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import AuthProvider from "@/components/AuthProvider";
 import LayoutWrapper from "./components/LayoutWrapper";
 import { Space_Grotesk, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 
 const inter = Inter({
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode; })
     <html lang="en">
       <body>
         <AuthProvider>
+          <Analytics />
           <LayoutWrapper>{children}</LayoutWrapper>
         </AuthProvider>
       </body>

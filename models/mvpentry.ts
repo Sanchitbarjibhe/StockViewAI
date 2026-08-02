@@ -1,6 +1,6 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
-const mvpentryschema = new Schema(
+const WaitListschema = new Schema(
     {
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
@@ -8,10 +8,10 @@ const mvpentryschema = new Schema(
         registeredAt: { type: Date, default: Date.now },
     },
     {
-        collection: 'mvpentry'
+        collection: 'WaitList'
     }
 );
 
-const Mvpentry = models.Mvpentry || model('Mvpentry', mvpentryschema);
+const waitlist = models.WaitList || model('WaitList', WaitListschema);
 
-export default Mvpentry;
+export default waitlist;
