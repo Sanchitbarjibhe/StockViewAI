@@ -1,99 +1,173 @@
 'use client';
 
 import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface AuthFormProps {
-    redirectUrl?: string;
+    initialVariant?: 'login' | 'signup';
+    onSuccess?: (email: string) => void;
+    onClose?: () => void;
+    redirectUrl?: string | null;
 }
 
-export default function AuthForm({ redirectUrl = '/' }: AuthFormProps) {
-    const [isSignUp, setIsSignUp] = useState(false);
+interface StoredUser {
+    email: string;
+    password: string;
+}
+
+export default function AuthForm({ initialVariant = 'login', onSuccess, onClose, redirectUrl = '/' }: AuthFormProps) {
+    const [variant, setVariant] = useState<'login' | 'signup'>(initialVariant);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState<'success' | 'error'>('success');
+    const router = useRouter();
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log(isSignUp ? 'Signing Up:' : 'Logging In:', { email, password, redirectUrl });
+    const clearForm = () => {
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setMessage('');
+    };
+
+    const handleAuth = (e?: React.FormEvent<HTMLFormElement>) => {
+        if (e) e.preventDefault();
+
+        if (!email || !password) {
+            setMessageType('error');
+            setMessage('Please enter both email and password.');
+            return;
+        }
+
+        const storedUsers = JSON.parse(localStorage.getItem('neoUsers') || '[]') as StoredUser[];
+
+        if (variant === 'signup') {
+            if (password !== confirmPassword) {
+                setMessageType('error');
+                setMessage('Passwords do not match.');
+                return;
+            }
+
+            if (storedUsers.some((user) => user.email === email.toLowerCase())) {
+                setMessageType('error');
+                setMessage('This email is already registered. Please log in.');
+                return;
+            }
+
+            storedUsers.push({ email: email.toLowerCase(), password });
+            localStorage.setItem('neoUsers', JSON.stringify(storedUsers));
+
+            setMessageType('success');
+            setMessage('Account created successfully. Redirecting...');
+            if (onSuccess) onSuccess(email.toLowerCase());
+            if (onClose) onClose();
+            if (redirectUrl) setTimeout(() => router.push(redirectUrl), 700);
+            return;
+        }
+
+        const matchedUser = storedUsers.find((user) => user.email === email.toLowerCase() && user.password === password);
+        if (!matchedUser) {
+            setMessageType('error');
+            setMessage('Invalid email or password.');
+            return;
+        }
+
+        setMessageType('success');
+        setMessage('Login successful. Redirecting...');
+        if (onSuccess) onSuccess(email.toLowerCase());
+        if (onClose) onClose();
+        if (redirectUrl) setTimeout(() => router.push(redirectUrl), 700);
     };
 
     return (
-        <div className="flex flex-col gap-4">
+        <div>
+            <div className="flex items-center justify-between">
+                <div>
+                    <h2 className="text-2xl font-semibold text-white">{variant === 'login' ? 'Welcome back' : 'Create your account'}</h2>
+                    <p className="mt-2 text-sm text-slate-400">{variant === 'login' ? 'Log in to access your dashboard.' : 'Set up your secure account.'}</p>
+                </div>
+                <div className="flex rounded-full bg-slate-900 p-1 text-sm text-slate-400">
+                    <button
+                        type="button"
+                        className={`rounded-full px-4 py-2 transition ${variant === 'login' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-slate-800'}`}
+                        onClick={() => { setVariant('login'); clearForm(); }}
+                    >
+                        Login
+                    </button>
+                    <button
+                        type="button"
+                        className={`rounded-full px-4 py-2 transition ${variant === 'signup' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-slate-800'}`}
+                        onClick={() => { setVariant('signup'); clearForm(); }}
+                    >
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+
+            {message ? (
+                <div className={`rounded-2xl border px-4 py-3 text-sm mt-3 ${messageType === 'success' ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200' : 'border-rose-500/30 bg-rose-500/10 text-rose-200'}`}>
+                    {message}
+                </div>
+            ) : null}
+
             <button
                 type="button"
-                className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-medium py-2.5 px-4 rounded-xl transition text-xs sm:text-sm"
+                onClick={() => signIn('google', { callbackUrl: redirectUrl || '/' })}
+                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-950 px-5 py-3 text-sm font-semibold text-black mt-4 transition hover:border-slate-700 hover:bg-slate-900"
             >
-                <svg className="w-4 h-4" viewBox="0 0 24 24">
-                    <path
-                        fill="#EA4335"
-                        d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.2 9 5 12 5z"
-                    />
-                    <path
-                        fill="#4285F4"
-                        d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"
-                    />
-                    <path
-                        fill="#FBBC05"
-                        d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15s.7 5.3 1.9 7.7l3.7-2.9c-.3-.8-.5-1.6-.5-2.5z"
-                    />
-                    <path
-                        fill="#34A853"
-                        d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.2-6.4-5.2L1.9 16C3.7 19.7 7.5 22.3 12 23z"
-                    />
-                </svg>
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-black font-semibold">G</span>
                 Continue with Google
             </button>
 
-            <div className="flex items-center my-1">
-                <div className="flex-1 border-t border-slate-800" />
-                <span className="px-3 text-slate-500 text-[11px] uppercase tracking-wider font-semibold">
-                    OR EMAIL
-                </span>
-                <div className="flex-1 border-t border-slate-800" />
+            <div className="relative py-3 text-center text-xs uppercase tracking-[0.2em] text-slate-500">
+                <span className="bg-slate-950 px-3">or use email</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Email Address</label>
+            <form onSubmit={handleAuth} className="space-y-4">
+                <label className="block text-sm text-slate-300">
+                    Email
                     <input
-                        type="email"
-                        required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="trader@neoai.com"
-                        className="w-full bg-slate-900 border border-slate-800 focus:border-emerald-500 text-slate-100 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm outline-none transition"
+                        type="email"
+                        placeholder="you@example.com"
+                        className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
                     />
-                </div>
+                </label>
 
-                <div>
-                    <label className="block text-xs font-semibold text-slate-400 mb-1">Password</label>
+                <label className="block text-sm text-slate-300">
+                    Password
                     <input
-                        type="password"
-                        required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        className="w-full bg-slate-900 border border-slate-800 focus:border-emerald-500 text-slate-100 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm outline-none transition"
+                        type="password"
+                        placeholder="Enter password"
+                        className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
                     />
-                </div>
+                </label>
+
+                {variant === 'signup' && (
+                    <label className="block text-sm text-slate-300">
+                        Confirm Password
+                        <input
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            type="password"
+                            placeholder="Repeat password"
+                            className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
+                        />
+                    </label>
+                )}
 
                 <button
                     type="submit"
-                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition shadow-lg shadow-emerald-500/20 mt-1"
+                    className="w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
                 >
-                    {isSignUp ? 'Create Trading Account' : 'Sign In to Terminal'}
+                    {variant === 'login' ? 'Sign in' : 'Create account'}
                 </button>
             </form>
-
-            <p className="text-center text-xs text-slate-400 mt-2">
-                {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-                <button
-                    type="button"
-                    onClick={() => setIsSignUp(!isSignUp)}
-                    className="text-emerald-400 font-bold hover:underline ml-1"
-                >
-                    {isSignUp ? 'Sign In' : 'Sign Up'}
-                </button>
-            </p>
         </div>
     );
 }

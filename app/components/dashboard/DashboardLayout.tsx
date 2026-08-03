@@ -10,7 +10,7 @@ import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
 import AiPromptBar from './AiPromptBar';
-import AuthModal from '../authmodel';
+import AuthModal from '../login/authmodel';
 
 interface IndexData {
     name: string;

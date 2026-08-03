@@ -1,7 +1,7 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
 import { decryptKey } from '@/lib/encryption';
-import { doc, getDoc } from 'firebase/firestore';
+import 'firebase/firestore';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromSession } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
@@ -16,11 +16,12 @@ export async function POST(req: NextRequest) {
         const { prompt, marketContextData } = await req.json();
 
         // 1. Fetch User's Encrypted Key from DB
-        const userDocRef = doc(db, 'users', session.userId);
-        const userDocSnap = await getDoc(userDocRef);
-        const user = userDocSnap.exists() ? userDocSnap.data() : null;
+        // 1. Fetch User's Encrypted Key from DB (v8 Chaining Syntax)
+        const userDocSnap = await db.collection('users').doc(session.userId).get();
+        const user = userDocSnap.exists ? userDocSnap.data() : null;
 
         if (!user?.aiSettings?.geminiApiKeyEncrypted) {
+
             return NextResponse.json({
                 error: 'Please configure your Gemini API Key in Settings first.'
             }, { status: 400 });
