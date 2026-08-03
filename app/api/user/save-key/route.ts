@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbConnect } from '@/lib/dbConnect';
-import { User } from '@/models/User';
+import { connectToMongoDB } from '@/lib/dbConnect';
+import User from 'models/user';
 
 export async function POST(req: NextRequest) {
     try {
-        await dbConnect();
+        await connectToMongoDB();
         const { email, apiKey } = await req.json();
 
         if (!email) {

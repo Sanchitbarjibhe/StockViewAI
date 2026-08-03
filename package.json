@@ -3,26 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "cls": "cls",
     "dev": "next dev --webpack",
+    "deploy": "vercel --prod",
     "build": "next build",
-    "start": "next start",
-    "lint": "npx next lint"
+    "rm all": "del /f /q package-lock.json && rmdir /s /q node_modules .next .vercel",
+    "rm nextlock": "del /f /q package-lock.json && rmdir /s /q .next",
+    "audit": "npm audit",
+    "lint": "next lint"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
+    "feedparser": "^2.6.0",
     "lucide-react": "^0.383.0",
-    "next": "^16.0.0",
+    "@google/genai": "^2.13.0",
+    "mongoose": "^8.4.4",
+    "next": "14.2.4",
     "next-auth": "^4.24.15",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.14.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/feedparser": "^2.2.8",
+    "@types/node": "20.14.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5.6.0"
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
   }
 }

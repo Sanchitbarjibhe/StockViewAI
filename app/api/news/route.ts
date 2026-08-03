@@ -3,13 +3,15 @@ import Parser from 'rss-parser';
 
 const parser = new Parser();
 
+export const revalidate = 0; // Ensures the route is always dynamic and not cached
+
 export async function GET() {
     try {
         const feed = await parser.parseURL(
             'https://news.google.com/rss/search?q=NSE+BSE+stock+market+India&hl=en-IN&gl=IN&ceid=IN:en'
         );
 
-        const newsItems = feed.items.slice(0, 4).map((item, index) => {
+        const newsItems = feed.items.slice(0, 4).map((item: any, index: any) => {
             const titleParts = item.title?.split(' - ') || [];
             const title = titleParts.slice(0, -1).join(' - ') || item.title || '';
             const source = titleParts[titleParts.length - 1] || 'Market News';
