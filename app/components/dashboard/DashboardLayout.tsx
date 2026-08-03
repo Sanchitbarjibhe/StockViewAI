@@ -5,7 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import PinnedIndices from './PinnedIndices';
 import Header from './Header';
-import ActiveStocks from './ActiveStocks';
+// import ActiveStocks from './ActiveStocks'; future use
 import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
@@ -248,7 +248,7 @@ export default function DashboardLayout() {
                 selectedIndices={selectedIndices}
                 onShowSettings={() => setShowIndexSettings(true)} // Pass a function that takes no arguments
             />
-            <ActiveStocks />
+            {/* <ActiveStocks /> for future use */}
 
             <SectoralHeatmap
                 sectors={sectors} // from state
@@ -265,7 +265,7 @@ export default function DashboardLayout() {
             />
 
 
-            <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> {/* from state */}
+            {/* <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> from state | for future use*/}
 
             <AiResponseBox loading={loading} aiResponse={aiResponse} /> {/* from state */}
             <AiPromptBar

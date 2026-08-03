@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "cls": "cls",
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "deploy": "vercel --prod",
     "build": "next build",
     "rm all": "del /f /q package-lock.json && rmdir /s /q node_modules .next .vercel",
@@ -13,15 +12,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^2.13.0",
     "@vercel/analytics": "^2.0.1",
     "feedparser": "^2.6.0",
     "lucide-react": "^0.383.0",
-    "@google/genai": "^2.13.0",
     "mongoose": "^8.4.4",
-    "next": "14.2.4",
+    "next": "^16.2.12",
     "next-auth": "^4.24.15",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",

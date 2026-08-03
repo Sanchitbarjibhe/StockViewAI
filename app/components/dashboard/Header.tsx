@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22C55E', boxShadow: '0 0 10px #22C55E' }} />
                 <h1 style={{ fontSize: '15px', fontWeight: '800', letterSpacing: '0.6px', margin: 0, color: '#F8FAFC' }}>
-                    NEO<span style={{ color: '#22C55E' }}>TERMINAL</span>
+                    StockView<span style={{ color: '#22C55E' }}>AI</span>
                 </h1>
             </div>
 
