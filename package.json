@@ -19,7 +19,7 @@
     "firebase": "^12.17.0",
     "lucide-react": "^0.383.0",
     "mongoose": "^8.4.4",
-    "next": "^9.3.3",
+    "next": "^16.2.12",
     "next-auth": "^4.24.15",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

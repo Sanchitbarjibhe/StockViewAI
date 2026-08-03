@@ -1,6 +1,7 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
 import { decryptKey } from '@/lib/encryption';
+import { doc, getDoc } from 'firebase/firestore';
 import { GoogleGenAI } from '@google/genai';
 import { getUserFromSession } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
@@ -15,7 +16,9 @@ export async function POST(req: NextRequest) {
         const { prompt, marketContextData } = await req.json();
 
         // 1. Fetch User's Encrypted Key from DB
-        const user = await db.user.findUnique({ where: { id: session.userId } });
+        const userDocRef = doc(db, 'users', session.userId);
+        const userDocSnap = await getDoc(userDocRef);
+        const user = userDocSnap.exists() ? userDocSnap.data() : null;
 
         if (!user?.aiSettings?.geminiApiKeyEncrypted) {
             return NextResponse.json({
