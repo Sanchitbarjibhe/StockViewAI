@@ -1,8 +1,9 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { decryptKey } from '@/lib/encryption';
+import { GoogleGenAI } from '@google/genai';
 import { getUserFromSession } from '@/lib/auth'; // NextAuth Session
+import { db } from '@/lib/firebase';
 
 export async function POST(req: NextRequest) {
     try {
@@ -23,16 +24,18 @@ export async function POST(req: NextRequest) {
         }
 
         // 2. Decrypt Key
-        const userApiKey = decryptKey(user.aiSettings.geminiApiKeyEncrypted);
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const systemPrompt = `You are NeoTerminal Financial AI. Analyze market data context: ${JSON.stringify(marketContextData)}`;
+        const fullPrompt = `${systemPrompt}\n\n${prompt}`;
 
         // 3. Initialize Gemini Client with User's Key dynamically
-        const genAI = new GoogleGenerativeAI(userApiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: fullPrompt,
+        });
 
         // 4. Generate AI Response
-        const systemPrompt = `You are NeoTerminal Financial AI. Analyze market data context: ${JSON.stringify(marketContextData)}`;
-        const result = await model.generateContent([systemPrompt, prompt]);
-        const responseText = result.response.text();
+        const responseText = result.text;
 
         return NextResponse.json({ success: true, analysis: responseText });
 

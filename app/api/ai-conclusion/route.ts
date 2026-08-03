@@ -11,10 +11,15 @@ export async function POST(req: Request) {
             );
         }
 
-        const ai = new GoogleGenAI({ apiKey });
-        const { marketData, userPrompt } = await req.json();
+        // 1. Initialize the client instance (commonly named 'ai')
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-        const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        // 2. Access the 'models' property on your instance, NOT 'GoogleGenAI'
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: "Hello world",
+        });
+        const { marketData, userPrompt } = await req.json();
 
         const systemInstruction = `
     You are an expert Institutional Market Analyst & Tape Reader for the Indian Stock Market (NSE/BSE).
@@ -28,14 +33,16 @@ export async function POST(req: Request) {
     Current Live Market Snapshot to analyze:
     ${JSON.stringify(marketData, null, 2)}`;
 
-        const result = await model.generateContent({
-            contents: [
-                { role: "user", parts: [{ text: userMessage }] }
-            ],
-            systemInstruction: systemInstruction
+        const result = await ai.models.generateContent({
+            model: "gemini-1.5-flash",
+            contents: userMessage, // Fixes: Argument of type 'string' is not assignable...
+            config: {
+                systemInstruction: systemInstruction // Fixes: Object literal may only specify known properties...
+            }
         });
 
-        const responseText = result.response.text();
+        // Fixes: Property 'response' does not exist...
+        const responseText = result.text;
 
         return NextResponse.json({ success: true, conclusion: responseText });
     } catch (error: any) {
