@@ -1,4 +1,5 @@
-import { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { connectToMongoDB } from '@/lib/dbConnect';
 import User from "models/user";
@@ -74,3 +75,5 @@ export const authOptions: NextAuthOptions = {
         signIn: "/login",
     },
 };
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);

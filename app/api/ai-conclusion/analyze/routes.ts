@@ -1,6 +1,6 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
-import 'firebase/firestore';
+import { doc, getDoc } from "firebase/firestore"; // He top la check kara
 import { GoogleGenAI } from '@google/genai';
 import { auth } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
@@ -16,8 +16,11 @@ export async function POST(req: NextRequest) {
 
         // 1. Fetch User's Encrypted Key from DB
         // 1. Fetch User's Encrypted Key from DB (v8 Chaining Syntax)
-        const userDocSnap = await db.collection('users').doc(session.userId).get();
-        const user = userDocSnap.exists ? userDocSnap.data() : null;
+
+        // Line 19-20 chya jaagi ha code taka:
+        const userDocRef = doc(db, 'users', session.userId);
+        const userDocSnap = await getDoc(userDocRef);
+        const user = userDocSnap.exists() ? userDocSnap.data() : null;
 
         if (!user?.aiSettings?.geminiApiKeyEncrypted) {
 
