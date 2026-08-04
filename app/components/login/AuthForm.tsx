@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { FcGoogle } from "react-icons/fc"; // FcGoogle ha colorful logo ahe
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -82,30 +83,7 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
     };
 
     return (
-        <div>
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-2xl font-semibold text-white">{variant === 'login' ? 'Welcome back' : 'Create your account'}</h2>
-                    <p className="mt-2 text-sm text-slate-400">{variant === 'login' ? 'Log in to access your dashboard.' : 'Set up your secure account.'}</p>
-                </div>
-                <div className="flex rounded-full bg-slate-900 p-1 text-sm text-slate-400">
-                    <button
-                        type="button"
-                        className={`rounded-full px-4 py-2 transition ${variant === 'login' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-slate-800'}`}
-                        onClick={() => { setVariant('login'); clearForm(); }}
-                    >
-                        Login
-                    </button>
-                    <button
-                        type="button"
-                        className={`rounded-full px-4 py-2 transition ${variant === 'signup' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-slate-800'}`}
-                        onClick={() => { setVariant('signup'); clearForm(); }}
-                    >
-                        Sign Up
-                    </button>
-                </div>
-            </div>
-
+        <>
             {message ? (
                 <div className={`rounded-2xl border px-4 py-3 text-sm mt-3 ${messageType === 'success' ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200' : 'border-rose-500/30 bg-rose-500/10 text-rose-200'}`}>
                     {message}
@@ -115,14 +93,28 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
             <button
                 type="button"
                 onClick={() => signIn('google', { callbackUrl: redirectUrl || '/' })}
-                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-950 px-5 py-3 text-sm font-semibold text-black mt-4 transition hover:border-slate-700 hover:bg-slate-900"
+                style={{
+                    display: 'inline-flex',
+                    width: '100%',
+                    marginBottom: '10px',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',              /* gap-3 */
+                    borderRadius: '16px',     /* rounded-2xl */
+                    border: '1px solid #1e293b', /* border-slate-800 */
+                    backgroundColor: '#020617', /* bg-slate-950 */
+                    padding: '8px 10px',     /* px-5 (20px) ani py-3 (12px) */
+                    fontSize: '14px',         /* text-sm */
+                    fontWeight: '600',        /* font-semibold */
+                    color: '#ffffff',         /* Dark theme sathi text white kela ahe */
+                    marginTop: '16px',        /* mt-4 */
+                    transition: 'all 150ms'   /* transition */
+                }}
             >
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-black font-semibold">G</span>
-                Continue with Google
-            </button>
+                <FcGoogle className="size-20" />Continue with Google</button>
 
             <div className="relative py-3 text-center text-xs uppercase tracking-[0.2em] text-slate-500">
-                <span className="bg-slate-950 px-3">or use email</span>
+                {/* <span className="bg-slate-950 px-3">or use email</span> */}
             </div>
 
             <form onSubmit={handleAuth} className="space-y-4">
@@ -133,7 +125,18 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         placeholder="you@example.com"
-                        className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
+                        style={{
+                            marginTop: '8px',          /* mt-2 */
+                            width: '91%',             /* w-full */
+                            borderRadius: '16px',      /* rounded-2xl */
+                            border: '1px solid #1e293b', /* border-slate-800 */
+                            backgroundColor: '#020617', /* bg-slate-950 */
+                            padding: '12px 16px',      /* px-4 (16px) ani py-3 (12px) */
+                            fontSize: '14px',          /* text-sm */
+                            color: '#ffffff',          /* text-white */
+                            outline: 'none',           /* outline-none */
+                            transition: 'all 150ms'    /* transition */
+                        }}
                     />
                 </label>
 
@@ -144,7 +147,18 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         placeholder="Enter password"
-                        className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
+                        style={{
+                            marginTop: '8px',          /* mt-2 */
+                            width: '91%',             /* w-full */
+                            borderRadius: '16px',      /* rounded-2xl */
+                            border: '1px solid #1e293b', /* border-slate-800 */
+                            backgroundColor: '#020617', /* bg-slate-950 */
+                            padding: '12px 16px',      /* px-4 (16px) ani py-3 (12px) */
+                            fontSize: '14px',          /* text-sm */
+                            color: '#ffffff',          /* text-white */
+                            outline: 'none',           /* outline-none */
+                            transition: 'all 150ms'    /* transition */
+                        }}
                     />
                 </label>
 
@@ -163,11 +177,23 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
 
                 <button
                     type="submit"
-                    className="w-full rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                    style={{
+                        width: '98%',
+                        marginTop: '26px',          /* w-full */
+                        borderRadius: '16px',      /* rounded-2xl */
+                        backgroundColor: '#10b981', /* bg-emerald-500 */
+                        padding: '12px 20px',      /* px-5 (20px) ani py-3 (12px) */
+                        fontSize: '14px',          /* text-sm */
+                        fontWeight: '600',        /* font-semibold */
+                        color: '#020617',          /* text-slate-950 */
+                        transition: 'all 150ms',   /* transition */
+                        cursor: 'pointer',         /* Normal HTML button sathi hand icon */
+                        border: 'none'             /* Default button border kadhnya sathi */
+                    }}
                 >
                     {variant === 'login' ? 'Sign in' : 'Create account'}
                 </button>
             </form>
-        </div>
+        </>
     );
 }

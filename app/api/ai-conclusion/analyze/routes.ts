@@ -1,14 +1,13 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
-import { decryptKey } from '@/lib/encryption';
 import 'firebase/firestore';
 import { GoogleGenAI } from '@google/genai';
-import { getUserFromSession } from '@/lib/auth'; // NextAuth Session
+import { auth } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getUserFromSession(req);
+        const session = await auth();
         if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }

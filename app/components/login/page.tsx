@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ShieldCheck } from 'lucide-react';
-import AuthForm from '@/components/AuthForm';
+import AuthForm from './AuthForm';
 
 export default function Login() {
     const [selectedBroker, setSelectedBroker] = useState<'zerodha' | 'angelone' | 'fyers'>('zerodha');

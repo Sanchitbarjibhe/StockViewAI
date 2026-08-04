@@ -71,8 +71,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
                         <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981' }} />
-                        <span style={{ fontSize: '18px', fontWeight: '800', color: '#10B981', letterSpacing: '0.5px' }}>
-                            NEO<span style={{ color: '#FFF' }}>TERMINAL</span>
+                        <span style={{ fontSize: '18px', fontWeight: '800', color: '#FFF', letterSpacing: '0.5px' }}>
+                            StockView<span style={{ color: '#10B981' }}>AI</span>
                         </span>
                     </div>
                     <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>
