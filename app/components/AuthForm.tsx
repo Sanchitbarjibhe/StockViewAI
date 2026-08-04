@@ -92,7 +92,7 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
 
             <button
                 type="button"
-                onClick={() => signIn('google', { callbackUrl: redirectUrl || '/DashboardLayout' })}
+                onClick={() => signIn('google', { callbackUrl: redirectUrl || '/' })}
                 style={{
                     display: 'inline-flex',
                     width: '100%',
