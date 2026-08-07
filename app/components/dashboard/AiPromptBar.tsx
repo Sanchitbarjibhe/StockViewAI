@@ -45,7 +45,7 @@ const AiPromptBar: React.FC<AiPromptBarProps> = ({ prompt, setPrompt, handleAskA
                         <Terminal style={{ width: '14px', height: '14px', color: '#22C55E' }} />
                     </div>
                     <div>
-                        <p style={{ fontSize: '9px', fontWeight: '900', color: '#22C55E', margin: 0, letterSpacing: '0.6px' }}>GEMINI AI</p>
+                        <p style={{ fontSize: '9px', fontWeight: '900', color: '#22C55E', margin: 0, letterSpacing: '0.6px' }}>StockView AI</p>
                         <p style={{ fontSize: '8px', color: '#64748B', margin: 0, fontWeight: '700' }}>TERMINAL v2</p>
                     </div>
                 </div>
