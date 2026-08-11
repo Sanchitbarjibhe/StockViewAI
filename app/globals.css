@@ -2,14 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================
+   GLOBAL VARIABLES & ROOT DEFINITIONS
+   ========================================== */
+:root {
+  /* Font Variables for MVP */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+/* Base Body Defaults (Main Project Preserved) */
 body {
-  background-color: #0a0e17;
-  color: #e2e8f0;
+  background-color: var(--main-bg);
+  color: var(--main-text);
   margin: 0;
   padding: 0;
   font-family: Inter, system-ui, sans-serif;
 }
 
+@theme {
+  /* Main Project Colors */
+  --color-background: #0A0E17;
+  --color-neonGreen: #39FF14;
+  --color-neonRed: #FF073A;
+  --color-main-bg: #0A0E17;
+
+  /* MVP Landing Colors */
+  --color-mvp-void: #05070A;
+  --color-mvp-panel: rgba(255, 255, 255, 0.035);
+  --color-mvp-panel-border: rgba(255, 255, 255, 0.09);
+  --color-mvp-amber: #F0A93D;
+  --color-mvp-amber-dim: #8A6A2E;
+  --color-mvp-bull: #3ECF8E;
+  --color-mvp-bear: #FF5C5C;
+  --color-mvp-ink: #EDEFF2;
+  --color-mvp-dim: #7C8794;
+
+  /* MVP Fonts */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* MVP Shadows */
+  --shadow-glow-amber: 0 0 24px -4px rgba(240, 169, 61, 0.35);
+  --shadow-glow-bull: 0 0 20px -6px rgba(62, 207, 142, 0.45);
+  --shadow-glow-bear: 0 0 20px -6px rgba(255, 92, 92, 0.45);
+}
+
+/* ==========================================
+   BASE & MVP SCOPED STYLES
+   ========================================== */
+/* MVP Page Container Scope */
+.mvp-root {
+  background-color: #05070a !important;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(240, 169, 61, 0.07), transparent) !important;
+  color: #edeff2 !important;
+  font-family: var(--font-mono), monospace !important;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.mvp-root ::selection {
+  background: rgba(240, 169, 61, 0.3);
+}
+
+/* Scoped Utility Classes */
+.scanlines {
+  background-image: repeating-linear-gradient(0deg,
+      rgba(255, 255, 255, 0.014) 0px,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 3px);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 42s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes phosphor-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.pulse-dot {
+  animation: phosphor-pulse 1.8s ease-in-out infinite;
+}
+
+@media (max-width: 960px) {
+  .four-col-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .six-col-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .five-col-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .pinned-indices-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .two-col-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .six-col-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .stock-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pinned-indices-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .four-col-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .six-col-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .five-col-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .top-search-container {
+    width: 100% !important;
+  }
+
+  .header-form {
+    width: 100%;
+  }
+
+  .ai-prompt-container {
+    flex-direction: column;
+  }
+
+  .ai-prompt-badge {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+
+  .ai-prompt-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================
+   MAIN PROJECT COMPONENT STYLES
+   ========================================== */
 .home-shell {
   background-color: #05080E;
   min-height: 100vh;
@@ -120,7 +308,7 @@ body {
   background-color: rgba(15, 23, 42, 0.9) !important;
 }
 
-/* IMPROVED CARD STYLING */
+/* CARD STYLING */
 .card-glow {
   background-color: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -132,83 +320,4 @@ body {
   background-color: rgba(15, 23, 42, 0.9);
   border-color: rgba(59, 130, 246, 0.5);
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
-}
-
-/* RESPONSIVE DESIGN QUERIES */
-@media (max-width: 960px) {
-  .four-col-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .six-col-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-
-  .five-col-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .pinned-indices-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .two-col-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .six-col-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .stock-detail-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .pinned-indices-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .four-col-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .six-col-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .five-col-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  .top-search-container {
-    width: 100% !important;
-  }
-
-  .header-form {
-    width: 100%;
-  }
-
-  .ai-prompt-container {
-    flex-direction: column;
-  }
-
-  .ai-prompt-badge {
-    border-right: none !important;
-    padding-right: 0 !important;
-  }
-
-  .ai-prompt-button {
-    width: 100%;
-    justify-content: center;
-  }
 }

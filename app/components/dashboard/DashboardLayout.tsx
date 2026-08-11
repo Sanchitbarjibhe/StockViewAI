@@ -5,11 +5,12 @@ import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import PinnedIndices from './PinnedIndices';
 import Header from './Header';
-import ActiveStocks from './ActiveStocks';
+// import ActiveStocks from './ActiveStocks'; future use
 import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
 import AiPromptBar from './AiPromptBar';
+import AuthModal from '../authmodel';
 
 interface IndexData {
     name: string;
@@ -68,6 +69,11 @@ export default function DashboardLayout() {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
         signOut({ callbackUrl: '/' });
+    };
+
+    const handleAuthSuccess = (email: string) => {
+        console.log(`Auth success for ${email} from within dashboard modal.`);
+        setIsAuthOpen(false); // Close the modal on success
     };
 
     // -------------------- Data fetching --------------------
@@ -190,9 +196,9 @@ export default function DashboardLayout() {
             });
             const data = await res.json();
             if (data.success) setAiResponse(data.conclusion);
-            else setAiResponse("त्रुटी: उत्तर मिळवता आले नाही.");
+            else setAiResponse("Error: Could not retrieve a response.");
         } catch (err) {
-            setAiResponse("सर्व्हर एरर: बॅकएंडशी संपर्क होऊ शकला नाही.");
+            setAiResponse("Server Error: Could not connect to the backend.");
         } finally {
             setLoading(false);
             setPrompt("");
@@ -242,7 +248,7 @@ export default function DashboardLayout() {
                 selectedIndices={selectedIndices}
                 onShowSettings={() => setShowIndexSettings(true)} // Pass a function that takes no arguments
             />
-            <ActiveStocks />
+            {/* <ActiveStocks /> for future use */}
 
             <SectoralHeatmap
                 sectors={sectors} // from state
@@ -259,7 +265,7 @@ export default function DashboardLayout() {
             />
 
 
-            <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> {/* from state */}
+            {/* <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> from state | for future use*/}
 
             <AiResponseBox loading={loading} aiResponse={aiResponse} /> {/* from state */}
             <AiPromptBar
@@ -270,11 +276,11 @@ export default function DashboardLayout() {
                 quickChips={quickChips} // from state
             />
 
-            {/* <AuthModal
+            <AuthModal
                 isOpen={isAuthOpen}
                 onClose={() => setIsAuthOpen(false)}
                 onSuccessLogin={handleAuthSuccess}
-            /> */}
+            />
         </>
     );
 }

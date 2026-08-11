@@ -24,7 +24,7 @@ export default function Hero() {
     setMessage('');
 
     try {
-      const response = await fetch('/api/mvpentry', {
+      const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

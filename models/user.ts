@@ -1,18 +1,32 @@
-import mongoose, { Schema, Document, models, model } from 'mongoose';
+import { Schema, model, models } from "mongoose";
 
-export interface IUser extends Document {
-    email: string;
-    geminiApiKey?: string;
-    authProvider?: string;
-}
+const UserSchema = new Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    image: { type: String },
 
-const UserSchema = new Schema<IUser>(
-    {
-        email: { type: String, required: true, unique: true },
-        geminiApiKey: { type: String, default: '' },
-        authProvider: { type: String, default: 'google' },
+    // Primary Sign-in Method
+    authProvider: {
+        type: String,
+        enum: ["google", "zerodha", "angelone", "fyers", "standard"],
+        default: "google"
     },
-    { timestamps: true }
-);
 
-export const User = models.User || model<IUser>('User', UserSchema);
+    // ⚡ Details of all brokers connected by the user
+    connectedBrokers: [
+        {
+            brokerName: { type: String, enum: ["zerodha", "angelone", "fyers"] },
+            clientId: { type: String }, // e.g., Zerodha Client ID (AB1234)
+            accessToken: { type: String }, // Access Token received after OAuth
+            isConnected: { type: Boolean, default: true },
+            linkedAt: { type: Date, default: Date.now }
+        }
+    ],
+
+    role: { type: String, default: "trader" },
+    createdAt: { type: Date, default: Date.now },
+    lastLogin: { type: Date, default: Date.now },
+});
+
+const User = models.User || model("User", UserSchema);
+export default User;

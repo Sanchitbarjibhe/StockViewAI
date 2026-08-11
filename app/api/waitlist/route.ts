@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { connectToMongoDB } from '@/lib/db';
-import Mvpentry from 'models/mvpentry';
+import { connectToMongoDB } from '@/lib/dbConnect';
+import WaitList from 'models/waitlist';
 
 
 
@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     try {
         await connectToMongoDB();
 
-        console.log("✅ MongoDB Connected Successfully!"); // Terminal वर दिसेल
+        console.log("✅ MongoDB Connected Successfully!");
 
         const body = await request.json();
         console.log("📥 Received Data from Frontend:", body);
@@ -20,17 +20,17 @@ export async function POST(request: Request) {
             return NextResponse.json({ message: 'Name, email, and phone are required' }, { status: 400 });
         }
 
-        // Check for existing Mvpentry before attempting to create
-        const existingMvpentry = await Mvpentry.findOne({ email });
-        if (existingMvpentry) {
+        // Check for existing WaitList before attempting to create
+        const existingWaitList = await WaitList.findOne({ email });
+        if (existingWaitList) {
             return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
         }
 
-        const newMvpentry = await Mvpentry.create({ name, email, phone });
-        console.log("💾 Saved to DB:", newMvpentry);
-        return NextResponse.json({ message: 'Mvpentry successful', data: newMvpentry }, { status: 201 });
+        const newWaitList = await WaitList.create({ name, email, phone });
+        console.log("💾 Saved to DB:", newWaitList);
+        return NextResponse.json({ message: 'WaitList successful', data: newWaitList }, { status: 201 });
     } catch (error: any) {
-        console.error('Mvpentry error:', error);
+        console.error('WaitList error:', error);
         if (error.code === 11000) { // Duplicate key error for unique fields
             return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
         }

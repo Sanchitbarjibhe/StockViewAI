@@ -36,26 +36,34 @@
 "use client";
 
 import LandingPage from '@/components/landing/LandingPage';
+import MvpPage from './components/mvp/Mvppage';
+import Login from './components/login/page';
+
 
 export default function Home() {
+  // const { data: session, status } = useSession();
 
-  return (
-    // Main shell for the dashboard page layout.
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
-    <>
-      <LandingPage />
-    </>
+  if (status === "authenticated") {
+    return (
+      <div className="home-shell">
+        <div className="home-content">
+          <div className="home-glow" />
+          <div className="home-scroll-area no-scrollbar">
+            {/* <DashboardLayout /> */}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-    // <div className="home-shell">
-    //   <div className="home-content">
-    //     {/* Decorative background glow visible behind the dashboard. */}
-    //     <div className="home-glow" />
-
-    //     {/* Scrollable content container for the dashboard sections. */}
-    //     <div className="home-scroll-area no-scrollbar">
-    //     </div>
-    //   </div>
-    // </div>
-
-  );
+  // status === 'unauthenticated'
+  return <LandingPage />;
 }
