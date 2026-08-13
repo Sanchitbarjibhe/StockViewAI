@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "deploy": "vercel --prod",
-    "build": "next build --webpack",
-    "rm all": "del /f /q package-lock.json && rmdir /s /q node_modules .next .vercel",
-    "rm nextlock": "del /f /q package-lock.json && rmdir /s /q .next",
     "audit": "npm audit",
     "lint": "next lint"
   },
