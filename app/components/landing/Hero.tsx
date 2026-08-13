@@ -57,14 +57,14 @@ export default function Hero() {
 
       {/* Main Heading */}
       <h1 style={{ fontSize: '42px', fontWeight: '800', lineHeight: '1.2', marginBottom: '20px', letterSpacing: '-0.5px' }}>
-        Instant Market Analysis with <br />
+        Master the Market with<br />
         <span style={{ color: '#c084fc', background: 'linear-gradient(to right, #c084fc, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          Smart AI Advisor
+          AI-Powered Data In Single Click
         </span>
       </h1>
 
       <p style={{ color: '#94a3b8', fontSize: '16px', maxWidth: '650px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
-        Get real-time institutional volume levels, RSI-VWAP breakout alerts, and 3-bullet AI technical insights on a single screen.
+        Unify your trading with real-time market data, breakout alerts, and actionable AI insights—all on a single, intuitive screen.
       </p>
 
       {/* Lead Capture Form Card */}

@@ -3,7 +3,7 @@ import React from 'react';
 export default function Features() {
   return (
     <section id="features" style={{ padding: '60px 20px', maxWidth: '1100px', margin: '0 auto', borderTop: '1px solid #0f172a' }}>
-      <h2 style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginBottom: '40px', color: '#e2e8f0' }}>Why Traders Choose NEO AI?</h2>
+      <h2 style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginBottom: '40px', color: '#e2e8f0' }}>Why Traders Choose StockView AI?</h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
 

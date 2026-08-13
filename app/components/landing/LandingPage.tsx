@@ -18,7 +18,7 @@ export default function LandingPage() {
             {/* 3. Features Section */}
             <Features />
             {/* 4. Pricing Plans */}
-            <Pricing />
+            {/* <Pricing /> */}
             {/* Footer */}
             <Footer />
 
