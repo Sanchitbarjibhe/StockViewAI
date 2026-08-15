@@ -5,6 +5,8 @@ import Features from './Features';
 import Pricing from './Pricing';
 import Footer from './Footer';
 import AuthModal from '../authmodel';
+import ProductPreview from './ProductPreview';
+import MarketTicker from './MarketTicker';
 
 export default function LandingPage() {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -13,12 +15,14 @@ export default function LandingPage() {
         <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-purple-500 selection:text-white" style={{ backgroundColor: '#020617', color: '#f8fafc', minHeight: '100vh' }}>
             {/* 1. Header Navigation */}
             <Header onOpenAuth={() => setIsAuthOpen(true)} />
-            {/* 2. Hero Section with Lead Capture Form */}
+            <MarketTicker />
+            <ProductPreview />
             <Hero />
+            {/* 2. Hero Section with Lead Capture Form */}
             {/* 3. Features Section */}
             <Features />
             {/* 4. Pricing Plans */}
-            <Pricing />
+            {/* <Pricing /> */}
             {/* Footer */}
             <Footer />
 

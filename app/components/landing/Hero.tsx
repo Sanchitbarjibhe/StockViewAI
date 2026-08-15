@@ -57,15 +57,29 @@ export default function Hero() {
 
       {/* Main Heading */}
       <h1 style={{ fontSize: '42px', fontWeight: '800', lineHeight: '1.2', marginBottom: '20px', letterSpacing: '-0.5px' }}>
-        Instant Market Analysis with <br />
+        Master the Market with<br />
         <span style={{ color: '#c084fc', background: 'linear-gradient(to right, #c084fc, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          Smart AI Advisor
+          AI-Powered Data In Single Click
         </span>
       </h1>
 
       <p style={{ color: '#94a3b8', fontSize: '16px', maxWidth: '650px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
-        Get real-time institutional volume levels, RSI-VWAP breakout alerts, and 3-bullet AI technical insights on a single screen.
+        Unify your trading with real-time market data, breakout alerts, and actionable AI insights—all on a single, intuitive screen.
       </p>
+
+      {/* Social Proof Section */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginBottom: '40px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          {/* Note: Using placeholder images. Replace with actual user avatars if available. */}
+          <span style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#1e293b', border: '2px solid #0f172a', marginLeft: '-12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: '#94a3b8', fontWeight: '600' }}>+5k</span>
+          <img src="https://i.pravatar.cc/36?img=3" alt="User avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #0f172a', marginLeft: '-12px' }} />
+          <img src="https://i.pravatar.cc/36?img=4" alt="User avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #0f172a', marginLeft: '-12px' }} />
+          <img src="https://i.pravatar.cc/36?img=5" alt="User avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #0f172a' }} />
+        </div>
+        <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>
+          Join over <span style={{ fontWeight: '600', color: '#e2e8f0' }}>5,000+ traders</span> getting an edge.
+        </p>
+      </div>
 
       {/* Lead Capture Form Card */}
       <div style={{ maxWidth: '420px', margin: '0 auto', backgroundColor: '#0f172a', border: '1px solid #1e293b', padding: '28px', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)' }}>
@@ -111,6 +125,35 @@ export default function Hero() {
         {!message && (<p style={{ fontSize: '11px', color: '#64748b', marginTop: '12px', textAlign: 'center' }}>
           ⚡ Instant 3-day free access. No credit card required.
         </p>)}
+      </div>
+
+
+      {/* How It Works Section */}
+      <div style={{ marginTop: '80px', textAlign: 'center' }}>
+        <h3 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '40px', color: '#e2e8f0' }}>Get Actionable Insights in 3 Simple Steps</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '32px', maxWidth: '900px', margin: '0 auto' }}>
+
+          {/* Step 1 */}
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#1e293b', border: '1px solid #334155', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto', fontSize: '18px', fontWeight: '600', color: '#94a3b8' }}>1</div>
+            <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#e2e8f0', marginBottom: '8px' }}>Enter Any Stock</h4>
+            <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: '1.6' }}>Start by typing the name or ticker of any stock you're interested in.</p>
+          </div>
+
+          {/* Step 2 */}
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#1e293b', border: '1px solid #334155', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto', fontSize: '18px', fontWeight: '600', color: '#94a3b8' }}>2</div>
+            <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#e2e8f0', marginBottom: '8px' }}>Get Instant AI Analysis</h4>
+            <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: '1.6' }}>Our AI processes millions of data points to give you clear buy, hold, or sell signals.</p>
+          </div>
+
+          {/* Step 3 */}
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#1e293b', border: '1px solid #334155', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto', fontSize: '18px', fontWeight: '600', color: '#94a3b8' }}>3</div>
+            <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#e2e8f0', marginBottom: '8px' }}>Make Confident Decisions</h4>
+            <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: '1.6' }}>Use these insights to inform your trading strategy and get a competitive edge.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
