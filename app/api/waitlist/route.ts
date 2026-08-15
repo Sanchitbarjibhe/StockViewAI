@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectToMongoDB } from '@/lib/dbConnect';
-import WaitList from 'models/waitlist';
-
-
+import { Waitlist } from 'models/waitlist';
 
 export async function POST(request: Request) {
     try {
@@ -21,14 +19,27 @@ export async function POST(request: Request) {
         }
 
         // Check for existing WaitList before attempting to create
-        const existingWaitList = await WaitList.findOne({ email });
+        const existingWaitList = await Waitlist.findOne({ email });
         if (existingWaitList) {
             return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
         }
 
-        const newWaitList = await WaitList.create({ name, email, phone });
+        // 🟢 1. Vercel Env वरून Automatic Source ओळखा (Default 'BETA' राहील)
+        const appSource = process.env.APP_SOURCE || 'BETA';
+
+        // 🟢 2. Dynamic Source आणि Flag सोबत Mongo मध्ये Save करा
+        const newWaitList = await Waitlist.create({
+            name,
+            email,
+            phone,
+            source: appSource,                       // 'BETA' किंवा 'LIVE'
+            isBetaUser: appSource === 'BETA',       // Beta असेल तर true, Live असेल तर false
+            status: 'WAITING'
+        });
+
         console.log("💾 Saved to DB:", newWaitList);
         return NextResponse.json({ message: 'WaitList successful', data: newWaitList }, { status: 201 });
+
     } catch (error: any) {
         console.error('WaitList error:', error);
         if (error.code === 11000) { // Duplicate key error for unique fields

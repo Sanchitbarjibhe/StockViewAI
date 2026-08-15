@@ -29,7 +29,10 @@ export default function Hero() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          sourceDomain: window.location.hostname.includes('beta') ? 'BETA' : 'LIVE',
+        }),
       });
 
       const result = await response.json();
