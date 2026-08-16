@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectToMongoDB } from '@/lib/dbConnect';
 import { Waitlist } from 'models/waitlist';
 
+
 export async function POST(request: Request) {
     try {
         await connectToMongoDB();
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
         const body = await request.json();
         console.log("📥 Received Data from Frontend:", body);
 
-        const { name, email, phone } = body;
+        const { name, email, phone, broker } = body;
 
         // Validate required fields first
         if (!name || !email || !phone) {
@@ -23,17 +24,18 @@ export async function POST(request: Request) {
         if (existingWaitList) {
             return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
         }
-
+        const appSource = process.env.APP_SOURCE || process.env.NEXT_PUBLIC_APP_SOURCE || 'BETA';
         // 🟢 1. Vercel Env वरून Automatic Source ओळखा (Default 'BETA' राहील)
-        const appSource = process.env.APP_SOURCE || 'BETA';
+        const currentEnv = appSource === 'LIVE' ? 'LIVE' : 'BETA';
 
         // 🟢 2. Dynamic Source आणि Flag सोबत Mongo मध्ये Save करा
         const newWaitList = await Waitlist.create({
             name,
             email,
             phone,
-            source: appSource,                       // 'BETA' किंवा 'LIVE'
-            isBetaUser: false,       // Beta असेल तर true, Live असेल तर false
+            broker: broker || 'Other',
+            environment: currentEnv,                // 🟢 DB Schema नुसार 'BETA' किंवा 'LIVE'
+            isBetaUser: currentEnv === 'BETA',     // 🟢 Beta वरून आला तर true, Live वरून false
             status: 'WAITING'
         });
 

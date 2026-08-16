@@ -7,7 +7,7 @@ const WaitlistSchema = new Schema({
 
     environment: {
         type: String,
-        enum: ['BETA', 'PRODUCTION'],
+        enum: ['BETA', 'LIVE'],
         default: 'BETA'
     },
     isBetaUser: { type: Boolean, default: true },
