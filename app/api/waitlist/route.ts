@@ -33,7 +33,7 @@ export async function POST(request: Request) {
             email,
             phone,
             source: appSource,                       // 'BETA' किंवा 'LIVE'
-            isBetaUser: appSource === 'BETA',       // Beta असेल तर true, Live असेल तर false
+            isBetaUser: true,       // Beta असेल तर true, Live असेल तर false
             status: 'WAITING'
         });
 
