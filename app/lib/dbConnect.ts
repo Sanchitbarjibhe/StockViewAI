@@ -28,7 +28,7 @@ export async function connectToMongoDB() {
 
         cached.promise = mongoose
             .connect(MONGODB_URI!, {
-                dbName: "neoterminal", // Your DB name
+                dbName: "StockViewApp", // Your DB name
                 bufferCommands: false,
             })
             .then((mongooseInstance) => {
