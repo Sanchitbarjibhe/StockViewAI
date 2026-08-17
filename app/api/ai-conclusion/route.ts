@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(req: Request) {
     try {
@@ -11,16 +11,8 @@ export async function POST(req: Request) {
             );
         }
 
-        // 1. Initialize the client instance (commonly named 'ai')
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
-        // 2. Access the 'models' property on your instance, NOT 'GoogleGenAI'
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: "Hello world",
-        });
+        const genAI = new GoogleGenerativeAI(apiKey);
         const { marketData, userPrompt } = await req.json();
-
         const systemInstruction = `
     You are an expert Institutional Market Analyst & Tape Reader for the Indian Stock Market (NSE/BSE).
     Analyze the provided live market data and answer the user query concisely in bullet points or short paragraphs.
@@ -33,18 +25,16 @@ export async function POST(req: Request) {
     Current Live Market Snapshot to analyze:
     ${JSON.stringify(marketData, null, 2)}`;
 
-        const result = await ai.models.generateContent({
-            model: "gemini-1.5-flash",
-            contents: userMessage, // Fixes: Argument of type 'string' is not assignable...
-            config: {
-                systemInstruction: systemInstruction // Fixes: Object literal may only specify known properties...
-            }
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-1.5-flash',
+            systemInstruction: systemInstruction,
         });
 
-        // Fixes: Property 'response' does not exist...
-        const responseText = result.text;
+        const result = await model.generateContent(userMessage);
+        const response = result.response;
+        const conclusion = response.text();
 
-        return NextResponse.json({ success: true, conclusion: responseText });
+        return NextResponse.json({ success: true, conclusion: conclusion });
     } catch (error: any) {
         // Log the detailed error for debugging
         console.error('❌ Gemini API Error:', error);

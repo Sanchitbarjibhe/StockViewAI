@@ -38,7 +38,7 @@ const SectoralHeatmap: React.FC<SectoralHeatmapProps> = ({
                     <h3 style={{ fontSize: '11px', fontWeight: '700', margin: 0, color: '#E2E8F0' }}>SECTORAL HEATMAP (ALL {sectors.length} SECTORS)</h3>
                 </div>
                 <div style={{ display: 'flex', gap: '4px', backgroundColor: 'rgba(10, 15, 26, 0.8)', padding: '2px', borderRadius: '6px' }}>
-                    {(['1D', '1W', '1M', '1Y', '5Y'] as const).map((tf) => (
+                    {(['1D'] as const).map((tf) => (
                         <button
                             key={tf}
                             onClick={() => setSectorTimeframe(tf)}

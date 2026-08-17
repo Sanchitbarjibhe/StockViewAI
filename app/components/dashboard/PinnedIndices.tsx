@@ -88,7 +88,7 @@ const PinnedIndices: React.FC<PinnedIndicesProps> = ({
                 <span style={{ fontSize: '10px', fontWeight: '700', color: '#64748B', letterSpacing: '0.5px' }}>
                     PINNED INDICES (LIVE NSE)
                 </span>
-                <button
+                {/* <button
                     onClick={onShowSettings}
                     style={{
                         display: 'flex',
@@ -104,8 +104,8 @@ const PinnedIndices: React.FC<PinnedIndicesProps> = ({
                         cursor: 'pointer'
                     }}
                 >
-                    <Settings style={{ width: '11px', height: '11px' }} /> Configure
-                </button>
+                    <Settings style={{ width: '11px', height: '11px' }} /> List All Indicies
+                </button> */}
             </div>
 
             {/* Grid Items */}

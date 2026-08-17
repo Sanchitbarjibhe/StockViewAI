@@ -9,7 +9,7 @@ export default function Features() {
 
         <div style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', padding: '24px', borderRadius: '16px' }}>
           <div style={{ fontSize: '24px', marginBottom: '12px' }}>🧠</div>
-          <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>Gemini AI Advisor</h3>
+          <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>StockView AI Advisor</h3>
           <p style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.5' }}>
             Converts complex candlestick patterns and indicator data into 3 clean, actionable bullet points.
           </p>
