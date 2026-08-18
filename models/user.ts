@@ -23,7 +23,11 @@ const UserSchema = new Schema({
         }
     ],
 
-    role: { type: String, default: "trader" },
+    role: {
+        type: String,
+        enum: ['USER', 'ADMIN'],
+        default: 'USER'
+    },
     createdAt: { type: Date, default: Date.now },
     lastLogin: { type: Date, default: Date.now },
 });

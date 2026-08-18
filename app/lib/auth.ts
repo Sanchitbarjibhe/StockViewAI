@@ -32,8 +32,8 @@ export const authOptions: NextAuthOptions = {
                             name: user.name,
                             email: user.email,
                             image: user.image,
-                            authProvider: "google",
-                            role: "trader",
+                            authProvider: 'google',
+                            role: 'USER', // Default role 'USER' set kela ahe
                             createdAt: new Date(),
                             lastLogin: new Date(),
                         });
@@ -55,18 +55,23 @@ export const authOptions: NextAuthOptions = {
             return true;
         },
 
-        async session({ session }) {
-            if (session.user) {
-                try {
-                    await connectToMongoDB();
-                    const dbUser = await User.findOne({ email: session.user.email });
-                    if (dbUser) {
-                        (session.user as any).id = dbUser._id.toString();
-                        (session.user as any).role = dbUser.role || "trader";
-                    }
-                } catch (err) {
-                    console.error("Session callback error:", err);
+        // 1. JWT तयार होताना DB मधून Role उचला
+        async jwt({ token, user }) {
+            if (user) {
+                await connectToMongoDB();
+                debugger;
+                const dbUser = await User.findOne({ email: user.email });
+                if (dbUser) {
+                    token.role = dbUser.role; // DB मधील 'ADMIN' token ला जोडला
                 }
+            }
+            return token;
+        },
+
+        // 2. JWT मधील Role Session मध्ये Pass करा (जेणेकरून Frontend/Console ला दिसेल)
+        async session({ session, token }) {
+            if (session.user) {
+                (session.user as any).role = token.role;
             }
             return session;
         },
