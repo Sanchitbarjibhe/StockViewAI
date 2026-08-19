@@ -1,4 +1,4 @@
-# 📈 Neo Trading Terminal
+# 📈 StockView AI
 
 A high-performance, real-time Institutional Market Terminal built for the Indian Stock Market (NSE/BSE). Built with Next.js 16, TypeScript, Tailwind CSS, and integrated with **Google Gemini 2.5 Flash** for instant market bias analysis and breakout predictions.
 
