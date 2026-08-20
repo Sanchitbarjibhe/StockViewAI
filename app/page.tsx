@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import LandingPage from '@/components/landing/LandingPage';
-import AdminDashboard from './components/admin/page';
+import AdminDashboard from '@/components/admin/AdminDashboard';
 
 
 export default function Home() {

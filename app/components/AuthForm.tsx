@@ -93,25 +93,11 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
             <button
                 type="button"
                 onClick={() => signIn('google', { callbackUrl: redirectUrl || '/' })}
-                style={{
-                    display: 'inline-flex',
-                    width: '100%',
-                    marginBottom: '10px',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '12px',              /* gap-3 */
-                    borderRadius: '16px',     /* rounded-2xl */
-                    border: '1px solid #1e293b', /* border-slate-800 */
-                    backgroundColor: '#020617', /* bg-slate-950 */
-                    padding: '8px 10px',     /* px-5 (20px) ani py-3 (12px) */
-                    fontSize: '14px',         /* text-sm */
-                    fontWeight: '600',        /* font-semibold */
-                    color: '#ffffff',         /* Dark theme sathi text white kela ahe */
-                    marginTop: '16px',        /* mt-4 */
-                    transition: 'all 150ms'   /* transition */
-                }}
+                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-950 px-5 py-3 text-sm font-semibold text-white mt-4 transition-all duration-150 hover:bg-slate-800/50"
             >
-                <FcGoogle className="size-20" />Continue with Google</button>
+                <FcGoogle className="h-5 w-5" />
+                Continue with Google
+            </button>
 
             <div className="relative py-3 text-center text-xs uppercase tracking-[0.2em] text-slate-500">
                 {/* <span className="bg-slate-950 px-3">or use email</span> */}
@@ -124,19 +110,7 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
-                        placeholder="you@example.com"
-                        style={{
-                            marginTop: '8px',          /* mt-2 */
-                            width: '91%',             /* w-full */
-                            borderRadius: '16px',      /* rounded-2xl */
-                            border: '1px solid #1e293b', /* border-slate-800 */
-                            backgroundColor: '#020617', /* bg-slate-950 */
-                            padding: '12px 16px',      /* px-4 (16px) ani py-3 (12px) */
-                            fontSize: '14px',          /* text-sm */
-                            color: '#ffffff',          /* text-white */
-                            outline: 'none',           /* outline-none */
-                            transition: 'all 150ms'    /* transition */
-                        }}
+                        placeholder="you@example.com" className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-all duration-150 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                     />
                 </label>
 
@@ -146,19 +120,7 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
-                        placeholder="Enter password"
-                        style={{
-                            marginTop: '8px',          /* mt-2 */
-                            width: '91%',             /* w-full */
-                            borderRadius: '16px',      /* rounded-2xl */
-                            border: '1px solid #1e293b', /* border-slate-800 */
-                            backgroundColor: '#020617', /* bg-slate-950 */
-                            padding: '12px 16px',      /* px-4 (16px) ani py-3 (12px) */
-                            fontSize: '14px',          /* text-sm */
-                            color: '#ffffff',          /* text-white */
-                            outline: 'none',           /* outline-none */
-                            transition: 'all 150ms'    /* transition */
-                        }}
+                        placeholder="Enter password" className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-all duration-150 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                     />
                 </label>
 
@@ -169,27 +131,13 @@ export default function AuthForm({ initialVariant = 'login', onSuccess, onClose,
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             type="password"
-                            placeholder="Repeat password"
-                            className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/10"
+                            placeholder="Repeat password" className="mt-2 w-full rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition-all duration-150 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                         />
                     </label>
                 )}
 
                 <button
-                    type="submit"
-                    style={{
-                        width: '98%',
-                        marginTop: '26px',          /* w-full */
-                        borderRadius: '16px',      /* rounded-2xl */
-                        backgroundColor: '#10b981', /* bg-emerald-500 */
-                        padding: '12px 20px',      /* px-5 (20px) ani py-3 (12px) */
-                        fontSize: '14px',          /* text-sm */
-                        fontWeight: '600',        /* font-semibold */
-                        color: '#020617',          /* text-slate-950 */
-                        transition: 'all 150ms',   /* transition */
-                        cursor: 'pointer',         /* Normal HTML button sathi hand icon */
-                        border: 'none'             /* Default button border kadhnya sathi */
-                    }}
+                    type="submit" className="w-full mt-4 rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-150 hover:bg-emerald-400"
                 >
                     {variant === 'login' ? 'Sign in' : 'Create account'}
                 </button>

@@ -89,7 +89,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight">
-              NEO AI <span className="text-emerald-400">Admin Terminal</span>
+              StockView <span className="text-emerald-400">AI Dashboard</span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
               Monitor live MVP signups & waitlist entries.
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
               onClick={() => signOut({ callbackUrl: '/' })}
               className="px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold rounded-lg transition"
             >
-              🚪 Logout
+              Logout
             </button>
           </div>
         </div>
