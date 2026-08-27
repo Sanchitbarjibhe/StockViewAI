@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, analysis: responseText });
 
     } catch (error: any) {
-        console.error("AI Generation Error:", error);
-        return NextResponse.json({ error: error.message || 'AI Processing Failed' }, { status: 500 });
+        console.error("❌ Gemini API Call Failed:", error);
+        return NextResponse.json(
+            { success: false, error: error.message || 'Could not retrieve a response.' },
+            { status: 500 }
+        )
     }
 }

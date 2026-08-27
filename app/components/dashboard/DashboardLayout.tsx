@@ -196,7 +196,7 @@ export default function DashboardLayout() {
             });
             const data = await res.json();
             if (data.success) setAiResponse(data.conclusion);
-            else setAiResponse("Error: Could not retrieve a response.");
+            else setAiResponse(data.error || data.conclusion || "Could not retrieve a response.");
         } catch (err) {
             setAiResponse("Server Error: Could not connect to the backend.");
         } finally {
@@ -267,7 +267,7 @@ export default function DashboardLayout() {
 
             {/* <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> from state | for future use*/}
 
-            <AiResponseBox loading={loading} aiResponse={aiResponse} /> {/* from state */}
+            <AiResponseBox loading={loading} aiResponse={aiResponse} />
             <AiPromptBar
                 prompt={prompt}
                 setPrompt={setPrompt}
