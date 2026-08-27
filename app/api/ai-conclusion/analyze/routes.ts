@@ -13,11 +13,6 @@ export async function POST(req: NextRequest) {
         }
 
         const { prompt, marketContextData } = await req.json();
-
-        // 1. Fetch User's Encrypted Key from DB
-        // 1. Fetch User's Encrypted Key from DB (v8 Chaining Syntax)
-
-        // Line 19-20 chya jaagi ha code taka:
         const userDocRef = doc(db, 'users', session.userId);
         const userDocSnap = await getDoc(userDocRef);
         const user = userDocSnap.exists() ? userDocSnap.data() : null;
