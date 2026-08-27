@@ -28,6 +28,12 @@ const UserSchema = new Schema({
         enum: ['USER', 'ADMIN'],
         default: 'USER'
     },
+    aiProvider: {
+        type: String,
+        enum: ['gemini', 'claude', 'openai'],
+        default: 'gemini'
+    },
+    encryptedApiKey: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     lastLogin: { type: Date, default: Date.now },
 });
