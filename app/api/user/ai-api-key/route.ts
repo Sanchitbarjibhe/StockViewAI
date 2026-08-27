@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { connectToMongoDB } from '@/lib/dbConnect';
-import { encrypt } from '@/lib/encryption';
+import { encryptKey } from '@/lib/encryption';
 import User from 'models/user';
 
 
@@ -12,18 +12,22 @@ export async function POST(req: Request) {
             return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
         }
 
-        const { apiKey } = await req.json();
+        const { apiKey, provider } = await req.json();
         if (!apiKey) {
             return NextResponse.json({ success: false, message: 'Key required' }, { status: 400 });
         }
 
+        if (!['gemini', 'claude', 'openai'].includes(provider)) {
+            return NextResponse.json({ success: false, message: 'Unsupported AI provider' }, { status: 400 });
+        }
+
         // Encrypt the API Key
-        const encryptedKey = encrypt(apiKey);
+        const encryptedKey = encryptKey(apiKey);
 
         await connectToMongoDB();
         await User.findOneAndUpdate(
             { email: session.user.email },
-            { geminiApiKey: encryptedKey }
+            { aiProvider: provider, encryptedApiKey: encryptedKey }
         );
 
         return NextResponse.json({ success: true, message: 'API Key Saved Successfully' });

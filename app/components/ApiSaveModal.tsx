@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AlertCircle, Check, Eye, EyeOff, KeyRound, X } from 'lucide-react';
 
 export default function ApiSaveModal({ onClose }: { onClose: () => void }) {
+    const providers = ['gemini', 'claude', 'openai'] as const;
     const [apiKey, setApiKey] = useState('');
     const [provider, setProvider] = useState<'gemini' | 'claude' | 'openai'>('gemini');
     const [loading, setLoading] = useState(false);
@@ -46,7 +47,7 @@ export default function ApiSaveModal({ onClose }: { onClose: () => void }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-            <div role="dialog" aria-modal="true" aria-labelledby="api-key-title" className="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 text-white shadow-2xl shadow-black/50">
+            <div role="dialog" aria-modal="true" aria-labelledby="api-key-title" className="max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-4 text-white shadow-2xl shadow-black/50 sm:p-6">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex items-start gap-3">
                         <div className="rounded-lg bg-emerald-500/10 p-2 text-emerald-400"><KeyRound size={18} /></div>
@@ -59,10 +60,11 @@ export default function ApiSaveModal({ onClose }: { onClose: () => void }) {
                 </div>
 
                 <div className="my-5 flex gap-2" role="group" aria-label="AI provider">
-                    {['gemini', 'claude', 'openai'].map((p) => (
+                    {providers.map((p) => (
                         <button
+                            type="button"
                             key={p}
-                            onClick={() => setProvider(p as any)}
+                            onClick={() => setProvider(p)}
                             className={`flex-1 rounded-lg border px-3 py-2 text-xs font-semibold capitalize transition ${provider === p
                                 ? 'bg-emerald-600 border-emerald-500 text-white'
                                 : 'bg-slate-950 border-slate-800 text-slate-400'
@@ -82,7 +84,7 @@ export default function ApiSaveModal({ onClose }: { onClose: () => void }) {
 
                 <div className="mt-6 flex justify-end gap-2">
                     <button type="button" onClick={onClose} className="rounded-lg px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800">Cancel</button>
-                    <button type="button" onClick={handleSave} disabled={loading} className="flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60">
+                    <button type="button" onClick={handleSave} disabled={loading} aria-busy={loading} className="flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60">
                         {loading ? 'Saving...' : <><Check size={14} /> Save key</>}
                     </button>
                 </div>
