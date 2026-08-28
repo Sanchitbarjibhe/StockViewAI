@@ -3,8 +3,7 @@
 import { useSession } from 'next-auth/react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import LandingPage from '@/components/landing/LandingPage';
-import MvpPage from './components/mvp/Mvppage';
-import Login from './components/login/page';
+import AdminDashboard from '@/components/admin/AdminDashboard';
 
 
 export default function Home() {
@@ -19,18 +18,17 @@ export default function Home() {
   }
 
   if (status === "authenticated") {
+    const userRole = (session?.user as any)?.role;
     return (
       <div className="home-shell">
         <div className="home-content">
           <div className="home-glow" />
           <div className="home-scroll-area no-scrollbar">
-            <DashboardLayout />
+            {userRole === 'ADMIN' ? <AdminDashboard /> : <DashboardLayout />}
           </div>
         </div>
       </div>
     );
   }
-
-  // status === 'unauthenticated'
   return <LandingPage />;
 }

@@ -5,13 +5,11 @@
   "scripts": {
     "dev": "next dev --webpack",
     "deploy": "vercel --prod",
-    "build": "next build --webpack",
-    "rm all": "del /f /q package-lock.json && rmdir /s /q node_modules .next .vercel",
-    "rm nextlock": "del /f /q package-lock.json && rmdir /s /q .next",
     "audit": "npm audit",
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.121.0",
     "@google/genai": "^2.13.0",
     "@google/generative-ai": "^0.24.1",
     "@vercel/analytics": "^2.0.1",
@@ -24,6 +22,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {

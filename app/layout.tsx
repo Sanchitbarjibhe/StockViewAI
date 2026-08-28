@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AuthProvider from "@/components/AuthProvider";
-import LayoutWrapper from "./components/LayoutWrapper";
-import "./globals.css";
+import LayoutWrapper from "@/components/LayoutWrapper";
+import 'app/globals.css'
 // import { Space_Grotesk, IBM_Plex_Mono, Inter } from "next/font/google";
 // import { Analytics } from "@vercel/analytics/next"
 

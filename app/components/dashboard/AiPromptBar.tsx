@@ -15,10 +15,11 @@ const AiPromptBar: React.FC<AiPromptBarProps> = ({ prompt, setPrompt, handleAskA
     return (
         <div style={{ padding: '12px 0 16px 0', backgroundColor: '#05080E', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
             {/* QUICK CHIPS */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', padding: '0 4px', flexWrap: 'wrap' }}>
+            <div className="quick-chips" role="list" aria-label="Suggested AI questions">
                 {quickChips.map((chip) => (
                     <button
                         key={chip}
+                        type="button"
                         onClick={() => setPrompt(chip)}
                         style={{
                             backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -28,6 +29,8 @@ const AiPromptBar: React.FC<AiPromptBarProps> = ({ prompt, setPrompt, handleAskA
                             borderRadius: '16px',
                             fontSize: '10px',
                             fontWeight: '600',
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
                             cursor: 'pointer',
                             transition: 'all 0.2s ease'
                         }}

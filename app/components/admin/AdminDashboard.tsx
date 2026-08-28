@@ -1,6 +1,8 @@
 'use client';
 
+import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Entry {
   _id: string;
@@ -10,9 +12,17 @@ interface Entry {
 }
 
 export default function AdminDashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState<string>('');
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/');
+    }
+  }, [status, router]);
 
   const fetchEntries = async () => {
     setLoading(true);
@@ -30,8 +40,10 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchEntries();
-  }, []);
+    if (status === 'authenticated') {
+      fetchEntries();
+    }
+  }, [status]);
 
   // Filter based on search query
   const filteredEntries = entries.filter(
@@ -61,6 +73,14 @@ export default function AdminDashboard() {
     a.click();
   };
 
+  if (status === 'loading' || status !== 'authenticated') {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-slate-950">
+        <p className="text-slate-400">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12 font-sans">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -69,7 +89,7 @@ export default function AdminDashboard() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
           <div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight">
-              NEO AI <span className="text-emerald-400">Admin Terminal</span>
+              StockView <span className="text-emerald-400">AI Dashboard</span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
               Monitor live MVP signups & waitlist entries.
@@ -88,6 +108,14 @@ export default function AdminDashboard() {
               className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg transition shadow-lg shadow-emerald-900/20 disabled:opacity-50"
             >
               📥 Export CSV
+            </button>
+
+            {/* 🟢 2. Sign Out Button (रेड स्टाईलसह) */}
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold rounded-lg transition"
+            >
+              Logout
             </button>
           </div>
         </div>

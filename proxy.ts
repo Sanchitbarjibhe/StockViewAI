@@ -6,16 +6,30 @@ export async function proxy(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const { pathname } = req.nextUrl;
 
-    // Allow public routes
-    if (pathname === '/' || pathname.startsWith('/login')) {
-        return NextResponse.next();
+    // Admin margaansathi (routes) suraksha tapasani
+    if (pathname.startsWith('/admin')) {
+        // Token naslyas kinva token madhye 'ADMIN' role naslyas,
+        // tyanna mukhya page var (home page) redirect kara.
+        if (!token || token.role !== 'ADMIN') {
+            return NextResponse.redirect(new URL('/', req.url));
+        }
     }
 
-    // If no token → redirect to login
-    if (!token) {
+    const isPublicRoute = pathname === '/' || pathname.startsWith('/login');
+
+    // Jar token ahe (user logged in ahe) aani to public route (login page) var janyacha prayatna kartoy,
+    // tar tyala dashboard var redirect kara.
+    if (token && isPublicRoute) {
+        // return NextResponse.redirect(new URL('/DashboardLayout', req.url));
+    }
+
+    // Jar token nahiye (user logged in nahiye) aani to protected route access kartoy,
+    // tar tyala login page var redirect kara.
+    if (!token && !isPublicRoute) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
+    // Anyatha, request पुढे जाऊ dya.
     return NextResponse.next();
 }
 

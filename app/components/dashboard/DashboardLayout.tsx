@@ -182,7 +182,18 @@ export default function DashboardLayout() {
         "Analyze Nifty support/resistance",
         "FII/DII activity in banking sector?",
         "Top 5 gainers in Nifty 50",
-        "Market sentiment today"
+        "Market sentiment today",
+        "Detect Sector Rotation: High - Beta to Defensive ?",
+        "Institutional accumulation in Nifty Midcap today ?",
+        "Smart Money volume divergence in BankNifty",
+        "Nifty PCR & Max Pain level analysis",
+        "Unwinding signals in Nifty Call / Put options",
+        "India VIX trend & market volatility impact",
+        "Top 3 breakout stocks based on volume profile",
+        "Identify short - covering candidate sectors",
+        "Risk - Off vs Risk - On sentiment check",
+        "USD / INR & US 10Y Yield impact on Nifty",
+        "FII cash vs futures positioning overview"
     ];
 
     const handleAskAI = async () => {
@@ -196,7 +207,7 @@ export default function DashboardLayout() {
             });
             const data = await res.json();
             if (data.success) setAiResponse(data.conclusion);
-            else setAiResponse("Error: Could not retrieve a response.");
+            else setAiResponse(data.error || data.conclusion || "Could not retrieve a response.");
         } catch (err) {
             setAiResponse("Server Error: Could not connect to the backend.");
         } finally {
@@ -267,7 +278,7 @@ export default function DashboardLayout() {
 
             {/* <MarketNews newsList={newsList} setSelectedNews={setSelectedNews} /> from state | for future use*/}
 
-            <AiResponseBox loading={loading} aiResponse={aiResponse} /> {/* from state */}
+            <AiResponseBox loading={loading} aiResponse={aiResponse} />
             <AiPromptBar
                 prompt={prompt}
                 setPrompt={setPrompt}

@@ -303,6 +303,29 @@ body {
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
+.quick-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 0 4px 3px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.quick-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-chips button:hover,
+.quick-chips button:focus-visible {
+  background-color: rgba(34, 197, 94, 0.2) !important;
+  border-color: rgba(34, 197, 94, 0.7) !important;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.16);
+  outline: none;
+}
+
 .news-item:hover {
   transform: translateY(-2px);
   background-color: rgba(15, 23, 42, 0.9) !important;
@@ -320,4 +343,87 @@ body {
   background-color: rgba(15, 23, 42, 0.9);
   border-color: rgba(59, 130, 246, 0.5);
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.ai-response-content>* {
+  margin: 0 0 8px;
+}
+
+.ai-response-content>*:last-child {
+  margin-bottom: 0;
+}
+
+.ai-response-content h3 {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.22);
+  color: #86efac;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.ai-response-content p {
+  color: #cbd5e1;
+}
+
+.ai-response-content ul,
+.ai-response-content ol {
+  display: grid;
+  gap: 5px;
+  padding-left: 20px;
+}
+
+.ai-response-content li::marker {
+  color: #22c55e;
+  font-weight: 800;
+}
+
+.ai-response-content blockquote {
+  padding: 8px 10px;
+  border-left: 2px solid #22c55e;
+  background: rgba(34, 197, 94, 0.07);
+  color: #d1fae5;
+}
+
+.ai-response-content code {
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.9);
+  padding: 2px 5px;
+  color: #93c5fd;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+}
+
+.ai-response-table {
+  overflow-x: auto;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 6px;
+}
+
+.ai-response-content table {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.ai-response-content th,
+.ai-response-content td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  text-align: left;
+}
+
+.ai-response-content th {
+  background: rgba(34, 197, 94, 0.08);
+  color: #bbf7d0;
+}
+
+.ai-response-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+  animation: phosphor-pulse 1.2s ease-in-out infinite;
 }

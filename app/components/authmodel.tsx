@@ -24,101 +24,42 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     };
 
     return (
-        <div
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                backgroundColor: 'rgba(7, 10, 15, 0.85)',
-                backdropFilter: 'blur(8px)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 1000
-            }}
-        >
-            <div
-                style={{
-                    backgroundColor: '#0D1117',
-                    border: '1px solid #10B981',
-                    borderRadius: '16px',
-                    width: '100%',
-                    maxWidth: '420px',
-                    padding: '24px',
-                    boxShadow: '0 20px 50px rgba(16, 185, 129, 0.15)',
-                    position: 'relative'
-                }}
-            >
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center w-screen h-screen bg-slate-950/80 backdrop-blur-sm">
+            <div className="relative w-full max-w-md p-6 bg-[#0D1117] border border-emerald-500 rounded-2xl shadow-2xl shadow-emerald-500/10">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    style={{
-                        position: 'absolute',
-                        top: '16px',
-                        right: '16px',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        color: '#64748B',
-                        cursor: 'pointer'
-                    }}
+                    className="absolute top-4 right-4 text-slate-500 transition-colors cursor-pointer hover:text-white"
                 >
-                    <X style={{ width: '18px', height: '18px' }} />
+                    <X className="w-[18px] h-[18px]" />
                 </button>
 
                 {/* Header */}
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981' }} />
-                        <span style={{ fontSize: '18px', fontWeight: '800', color: '#FFF', letterSpacing: '0.5px' }}>
-                            StockView<span style={{ color: '#10B981' }}>AI</span>
+                <div className="mb-5 text-center">
+                    <div className="inline-flex items-center gap-1.5 mb-1.5">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                        <span className="text-lg font-extrabold tracking-wider text-white">
+                            StockView<span className="text-emerald-500">AI</span>
                         </span>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>
+                    <p className="m-0 text-xs text-slate-500">
                         Sign in or create your account to access the trading dashboard
                     </p>
                 </div>
 
                 {/* Login Method Tabs */}
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: '4px',
-                        backgroundColor: '#161B22',
-                        padding: '4px',
-                        borderRadius: '8px',
-                        marginBottom: '20px'
-                    }}
-                >
+                <div className="grid grid-cols-2 gap-1 p-1 mb-5 rounded-lg bg-slate-800/50">
                     <button
                         onClick={() => setAuthTab('standard')}
-                        style={{
-                            backgroundColor: authTab === 'standard' ? '#1E293B' : 'transparent',
-                            color: authTab === 'standard' ? '#FFF' : '#64748B',
-                            border: 'none',
-                            padding: '6px 12px',
-                            borderRadius: '6px',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            cursor: 'pointer'
-                        }}
+                        className={`py-1.5 px-3 rounded-md text-xs font-bold cursor-pointer transition-colors ${authTab === 'standard' ? 'bg-slate-700 text-white' : 'bg-transparent text-slate-500 hover:text-slate-300'
+                            }`}
                     >
                         Standard / Google
                     </button>
                     <button
                         onClick={() => setAuthTab('broker')}
-                        style={{
-                            backgroundColor: authTab === 'broker' ? '#1E293B' : 'transparent',
-                            color: authTab === 'broker' ? '#10B981' : '#64748B',
-                            border: 'none',
-                            padding: '6px 12px',
-                            borderRadius: '6px',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            cursor: 'pointer'
-                        }}
+                        className={`py-1.5 px-3 rounded-md text-xs font-bold cursor-pointer transition-colors ${authTab === 'broker' ? 'bg-slate-700 text-emerald-400' : 'bg-transparent text-slate-500 hover:text-emerald-500'
+                            }`}
                     >
                         ⚡ Broker OAuth
                     </button>
@@ -131,12 +72,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
                 {/* Tab 2: Broker OAuth Login */}
                 {authTab === 'broker' && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <p style={{ fontSize: '11px', color: '#94A3B8', margin: 0 }}>
+                    <div className="flex flex-col gap-3">
+                        <p className="m-0 text-xs text-slate-300">
                             Connect your trading broker account for real-time live portfolio tracking & executions:
                         </p>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div className="flex flex-col gap-2">
                             {[
                                 { id: 'zerodha', name: 'Zerodha Kite', color: '#FF5722' },
                                 { id: 'angelone', name: 'Angel One', color: '#0052FF' },
@@ -145,37 +86,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                                 <button
                                     key={b.id}
                                     onClick={() => setSelectedBroker(b.id as any)}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        backgroundColor: selectedBroker === b.id ? '#161B22' : 'transparent',
-                                        border: `1px solid ${selectedBroker === b.id ? '#10B981' : '#30363D'}`,
-                                        padding: '10px 14px',
-                                        borderRadius: '8px',
-                                        color: '#FFF',
-                                        cursor: 'pointer'
-                                    }}
+                                    className={`flex items-center justify-between p-2.5 px-3.5 rounded-lg text-white cursor-pointer transition-all ${selectedBroker === b.id ? 'bg-slate-800 border-emerald-500' : 'bg-transparent border-slate-700 hover:border-slate-500'
+                                        }`}
                                 >
-                                    <span style={{ fontSize: '12px', fontWeight: '700' }}>{b.name}</span>
-                                    {selectedBroker === b.id && <ShieldCheck style={{ width: '16px', height: '16px', color: '#10B981' }} />}
+                                    <span className="text-sm font-bold">{b.name}</span>
+                                    {selectedBroker === b.id && <ShieldCheck className="w-4 h-4 text-emerald-500" />}
                                 </button>
                             ))}
                         </div>
 
                         <button
                             onClick={handleBrokerLogin}
-                            style={{
-                                backgroundColor: '#10B981',
-                                color: '#070A0F',
-                                fontWeight: '800',
-                                fontSize: '12px',
-                                padding: '10px',
-                                borderRadius: '8px',
-                                border: 'none',
-                                cursor: 'pointer',
-                                marginTop: '8px'
-                            }}
+                            className="py-2.5 mt-2 text-sm font-extrabold text-slate-950 bg-emerald-500 rounded-lg cursor-pointer hover:bg-emerald-400 transition-colors"
                         >
                             CONNECT WITH {selectedBroker.toUpperCase()}
                         </button>

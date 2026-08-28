@@ -1,24 +1,20 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 import { doc, getDoc } from "firebase/firestore"; // He top la check kara
 import { GoogleGenAI } from '@google/genai';
-import { auth } from '@/lib/auth'; // NextAuth Session
+import { authOptions } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await auth();
-        if (!session) {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.email) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
         const { prompt, marketContextData } = await req.json();
-
-        // 1. Fetch User's Encrypted Key from DB
-        // 1. Fetch User's Encrypted Key from DB (v8 Chaining Syntax)
-
-        // Line 19-20 chya jaagi ha code taka:
-        const userDocRef = doc(db, 'users', session.userId);
+        const userDocRef = doc(db, 'users', session.user.email);
         const userDocSnap = await getDoc(userDocRef);
         const user = userDocSnap.exists() ? userDocSnap.data() : null;
 
@@ -46,7 +42,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, analysis: responseText });
 
     } catch (error: any) {
-        console.error("AI Generation Error:", error);
-        return NextResponse.json({ error: error.message || 'AI Processing Failed' }, { status: 500 });
+        console.error("❌ Gemini API Call Failed:", error);
+        return NextResponse.json(
+            { success: false, error: error.message || 'Could not retrieve a response.' },
+            { status: 500 }
+        )
     }
 }

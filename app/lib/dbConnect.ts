@@ -46,8 +46,8 @@ export async function connectToMongoDB() {
     try {
         cached.conn = await cached.promise;
     } catch (e) {
-        cached.conn = null;
-        throw e;
+        cached.promise = null; // Ensure promise is cleared on failure to allow retry
+        throw e; // Re-throw the error to be handled by the caller
     }
 
     return cached.conn;
