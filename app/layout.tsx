@@ -2,32 +2,25 @@ import type { Metadata } from "next";
 import AuthProvider from "@/components/AuthProvider";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import 'app/globals.css'
-// import { Space_Grotesk, IBM_Plex_Mono, Inter } from "next/font/google";
-// import { Analytics } from "@vercel/analytics/next"
 
+const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const isLive = appSource === 'LIVE';
 
-// const inter = Inter({
-//   subsets: ["latin"],
-//   variable: "--font-sans",
-// });
-
-// const spaceGrotesk = Space_Grotesk({
-//   subsets: ["latin"],
-//   variable: "--font-display",
-// });
-
-// const ibmPlexMono = IBM_Plex_Mono({
-//   weight: ["400", "500", "600", "700"],
-//   subsets: ["latin"],
-//   variable: "--font-mono",
-// });
-
-// export const metadata: Metadata = {
-//   title: "NEO AI Trading Terminal",
-//   description: "Instant AI Insights for Traders",
-// };
-
-
+export const metadata: Metadata = {
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  title: 'StockViewAI - Real-Time AI Market Analytics',
+  description: 'AI-assisted market analytics, sector momentum, and trading insights in one terminal.',
+  verification: {
+    google: 'google-site-verification=xHEdA3O1N3DThdaDhkbULR7FE1JQNXKei1SHso0j52w',
+  },
+  robots: isLive
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
+  ...(isLive && siteUrl
+    ? { alternates: { canonical: siteUrl } }
+    : {}),
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
