@@ -3,17 +3,19 @@ import crypto from 'crypto';
 const ALGORITHM = 'aes-256-gcm';
 const SECRET_KEY = process.env.ENCRYPTION_SECRET_KEY || '';
 
-if (!SECRET_KEY || (Buffer.from(SECRET_KEY, 'utf-8') as Buffer).length !== 32) {
-    throw new Error(
-        'Invalid ENCRYPTION_SECRET_KEY. It must be a 32-byte (256-bit) string defined in your environment variables.'
-    );
+function getEncryptionKey() {
+    const keyBuffer = Buffer.from(SECRET_KEY, 'utf-8');
+    if (keyBuffer.length !== 32) {
+        throw new Error('Invalid ENCRYPTION_SECRET_KEY. It must be a 32-byte (256-bit) string defined in your environment variables.');
+    }
+    return new Uint8Array(keyBuffer);
 }
 
 // KEY EECRYPTTION
 export function encryptKey(text: string): string {
     const iv = crypto.randomBytes(12);
 
-    const keyBuffer = new Uint8Array(Buffer.from(SECRET_KEY, 'utf-8'));
+    const keyBuffer = getEncryptionKey();
     const ivBuffer = new Uint8Array(iv);
 
     const cipher = crypto.createCipheriv(ALGORITHM, keyBuffer, ivBuffer);
@@ -31,7 +33,7 @@ export function decryptKey(encryptedText: string): string {
     const iv = Buffer.from(ivHex, 'hex');
     const authTag = Buffer.from(authTagHex, 'hex');
 
-    const keyBuffer = new Uint8Array(Buffer.from(SECRET_KEY, 'utf-8'));
+    const keyBuffer = getEncryptionKey();
     const ivBuffer = new Uint8Array(iv);
 
     const decipher = crypto.createDecipheriv(ALGORITHM, keyBuffer, ivBuffer);

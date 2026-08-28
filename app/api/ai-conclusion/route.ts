@@ -1,16 +1,38 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { connectToMongoDB } from '@/lib/dbConnect';
+import { decryptKey } from '@/lib/encryption';
+import User from 'models/user';
 
 export async function POST(req: Request) {
     try {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.email) {
             return NextResponse.json(
-                { success: false, conclusion: 'API Key सेट केलेला नाही. .env.local फाइल तपासा.' },
-                { status: 500 }
+                { success: false, conclusion: 'Unauthorized' },
+                { status: 401 }
             );
         }
 
+        await connectToMongoDB();
+        const user = await User.findOne({ email: session.user.email }).select('aiProvider encryptedApiKey');
+        if (!user?.encryptedApiKey) {
+            return NextResponse.json(
+                { success: false, conclusion: 'Please save the AI API key in Settings first.' },
+                { status: 400 }
+            );
+        }
+
+        if (user.aiProvider !== 'gemini') {
+            return NextResponse.json(
+                { success: false, conclusion: 'Currently, only the Gemini provider is available for AI conclusion.' },
+                { status: 400 }
+            );
+        }
+
+        const apiKey = decryptKey(user.encryptedApiKey);
         const genAI = new GoogleGenerativeAI(apiKey);
         const { marketData, userPrompt } = await req.json();
         const systemInstruction = `

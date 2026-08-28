@@ -1,19 +1,20 @@
 // app/api/ai/analyze/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 import { doc, getDoc } from "firebase/firestore"; // He top la check kara
 import { GoogleGenAI } from '@google/genai';
-import { auth } from '@/lib/auth'; // NextAuth Session
+import { authOptions } from '@/lib/auth'; // NextAuth Session
 import { db } from '@/lib/firebase';
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await auth();
-        if (!session) {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.email) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
         const { prompt, marketContextData } = await req.json();
-        const userDocRef = doc(db, 'users', session.userId);
+        const userDocRef = doc(db, 'users', session.user.email);
         const userDocSnap = await getDoc(userDocRef);
         const user = userDocSnap.exists() ? userDocSnap.data() : null;
 
