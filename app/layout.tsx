@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'StockViewAI - Real-Time AI Market Analytics',
   description: 'AI-assisted market analytics, sector momentum, and trading insights in one terminal.',
   verification: {
-    google: 'google-site-verification=xHEdA3O1N3DThdaDhkbULR7FE1JQNXKei1SHso0j52w',
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
   robots: isLive
     ? { index: true, follow: true }
