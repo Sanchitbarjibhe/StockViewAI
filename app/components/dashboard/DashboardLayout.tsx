@@ -60,6 +60,7 @@ export default function DashboardLayout() {
 
     const isAuthenticated = status === 'authenticated';
     const userEmail = session?.user?.email ?? '';
+    const userImage = session?.user?.image ?? '';
 
     const handleOpenAuth = () => {
         router.push('/login');
@@ -249,6 +250,7 @@ export default function DashboardLayout() {
                 handleSearch={handleSearch}
                 isAuthenticated={isAuthenticated}
                 userEmail={userEmail}
+                userImage={userImage}
                 onOpenAuth={handleOpenAuth}
                 onLogout={handleLogout}
             />

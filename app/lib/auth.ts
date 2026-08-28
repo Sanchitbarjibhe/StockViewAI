@@ -17,6 +17,12 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    scope: 'openid email profile',
+                    prompt: 'consent',
+                },
+            },
         }),
     ],
     callbacks: {
@@ -59,10 +65,11 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user }) {
             if (user) {
                 await connectToMongoDB();
-                debugger;
                 const dbUser = await User.findOne({ email: user.email });
                 if (dbUser) {
                     token.role = dbUser.role; // DB मधील 'ADMIN' token ला जोडला
+                    token.email = dbUser.email;
+                    token.picture = dbUser.image;
                 }
             }
             return token;
@@ -72,6 +79,8 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }) {
             if (session.user) {
                 (session.user as any).role = token.role;
+                session.user.email = token.email || session.user.email;
+                session.user.image = token.picture || null;
             }
             return session;
         },
