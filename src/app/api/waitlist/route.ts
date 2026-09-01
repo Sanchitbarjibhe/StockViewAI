@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connectToMongoDB } from '@/lib/dbConnect';
+import { connectToMongoDB } from 'lib/dbConnect';
 import { Waitlist } from 'models/waitlist';
 
 

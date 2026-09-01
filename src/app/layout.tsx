@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AuthProvider from "@/components/AuthProvider";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import 'app/globals.css'
+import '@/app/globals.css';
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;

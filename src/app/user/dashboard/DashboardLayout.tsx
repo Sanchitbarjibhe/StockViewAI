@@ -10,7 +10,7 @@ import AiResponseBox from './AiResponseBox';
 import MarketNews from './MarketNews';
 import SectoralHeatmap from './SectoralHeatmap';
 import AiPromptBar from './AiPromptBar';
-import AuthModal from '../authmodel';
+import AuthModal from '@/components/AuthModal';
 
 interface IndexData {
     name: string;
@@ -80,7 +80,7 @@ export default function DashboardLayout() {
     // -------------------- Data fetching --------------------
     const fetchNews = useCallback(async () => {
         try {
-            const res = await fetch('/api/news', { cache: 'no-store' });
+            const res = await fetch('/api/user/news', { cache: 'no-store' });
             const json = await res.json();
             if (json.success) {
                 setNewsList(json.news || []);
@@ -134,7 +134,7 @@ export default function DashboardLayout() {
     const fetchMarketData = useCallback(async () => {
         try {
             setLoadingMarketData(true);
-            const res = await fetch('/api/market-data', { cache: 'no-store' });
+            const res = await fetch('/api/user/market-data', { cache: 'no-store' });
             const data = await res.json();
 
             if (data.success) {
@@ -201,7 +201,7 @@ export default function DashboardLayout() {
         if (!prompt.trim()) return;
         setLoading(true);
         try {
-            const res = await fetch('/api/ai-conclusion', {
+            const res = await fetch('/api/user/ai-conclusion', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ marketData: allIndices, userPrompt: prompt })

@@ -1,8 +1,28 @@
 import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
+import type { JWT } from "next-auth/jwt";
+import type { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { connectToMongoDB } from '@/lib/dbConnect';
-import User from "models/user";
+import User from "@/models/user";
+
+// Extend NextAuth types to include role
+declare module "next-auth" {
+    interface Session {
+        user: {
+            name?: string | null;
+            email?: string | null;
+            image?: string | null;
+            role?: string;
+        };
+    }
+}
+
+declare module "next-auth/jwt" {
+    interface JWT {
+        role?: string;
+    }
+}
 
 if (!process.env.GOOGLE_CLIENT_ID) {
     throw new Error("Missing GOOGLE_CLIENT_ID environment variable");
@@ -76,9 +96,9 @@ export const authOptions: NextAuthOptions = {
         },
 
         // 2. JWT मधील Role Session मध्ये Pass करा (जेणेकरून Frontend/Console ला दिसेल)
-        async session({ session, token }) {
+        async session({ session, token }: { session: Session; token: JWT }) {
             if (session.user) {
-                (session.user as any).role = token.role;
+                session.user.role = token.role;
                 session.user.email = token.email || session.user.email;
                 session.user.image = token.picture || null;
             }

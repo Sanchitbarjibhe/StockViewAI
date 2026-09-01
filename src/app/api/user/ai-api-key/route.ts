@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { connectToMongoDB } from '@/lib/dbConnect';
 import { encryptKey } from '@/lib/encryption';
-import User from 'models/user';
+import User from '@/models/user';
 
 
 export async function POST(req: Request) {
