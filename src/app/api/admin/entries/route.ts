@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectToMongoDB } from '@/lib/dbConnect';
-import { Waitlist } from 'models/waitlist'; // किंवा तुमचा Data Model
+import { Waitlist } from '@/models/waitlist'; // किंवा तुमचा Data Model
 
 export async function GET() {
     try {

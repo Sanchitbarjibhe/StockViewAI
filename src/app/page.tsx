@@ -1,9 +1,9 @@
 "use client";
 
 import { useSession } from 'next-auth/react';
-import DashboardLayout from '@/components/dashboard/DashboardLayout';
-import LandingPage from '@/components/landing/LandingPage';
-import AdminDashboard from '@/components/admin/AdminDashboard';
+import DashboardLayout from '@/app/user/dashboard/DashboardLayout'
+import AdminDashboard from '@/app/admin/AdminDashboard'
+import LandingPage from '@/app/landing/LandingPage'
 
 
 export default function Home() {

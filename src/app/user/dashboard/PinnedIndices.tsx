@@ -57,7 +57,7 @@ const PinnedIndices: React.FC<PinnedIndicesProps> = ({
         const fetchIndicesData = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/pinned-indices');
+                const res = await fetch('/api//user/pinned-indices');
                 const data = await res.json();
 
                 if (data.success && isMounted && data.indices) {

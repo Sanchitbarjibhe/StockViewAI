@@ -3,11 +3,7 @@
 import React, { useState } from 'react';
 import { Sparkles, TrendingUp, Activity, PieChart, ShieldCheck, Zap } from 'lucide-react';
 import Image from 'next/image';
-import terminalpreview from '../../../public/terminalpreview.jpg';
-
-
-
-
+import terminalpreview from '@/assets/terminalpreview.jpg';
 
 export default function ProductPreview() {
     const [activeTab, setActiveTab] = useState<'terminal' | 'heatmap' | 'ai'>('terminal');

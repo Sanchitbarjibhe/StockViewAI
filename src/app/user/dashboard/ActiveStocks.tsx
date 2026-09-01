@@ -48,7 +48,7 @@ const ActiveStocks: React.FC<ActiveStocksProps> = ({
         const fetchMarketData = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/market-data');
+                const res = await fetch('/api/user/market-data');
                 const data = await res.json();
 
                 if (data.success && isMounted) {
