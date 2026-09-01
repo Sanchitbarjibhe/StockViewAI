@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "deploy": "vercel --prod",
     "audit": "npm audit",
     "lint": "next lint"

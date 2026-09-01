@@ -55,7 +55,6 @@ const getDevelopmentConfig = () => ({
  */
 const getProductionConfig = () => ({
   compress: true,
-  swcMinify: true,
   trailingSlash: false,
   images: {
     formats: ['image/webp'],
