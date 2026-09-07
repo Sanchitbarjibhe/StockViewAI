@@ -9,11 +9,12 @@ interface HeaderProps {
     isAuthenticated: boolean;
     userEmail?: string;
     userImage?: string;
+    isBetaUser?: boolean;
     onOpenAuth: () => void;
     onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSearch, isAuthenticated, userEmail, userImage, onOpenAuth, onLogout }) => {
+const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSearch, isAuthenticated, userEmail, userImage, isBetaUser, onOpenAuth, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
@@ -42,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                     <h1 style={{ fontSize: '15px', fontWeight: '800', letterSpacing: '0.6px', margin: 0, color: '#F8FAFC' }}>
                         StockView<span style={{ color: '#22C55E' }}>AI</span>
                     </h1>
-                    <BetaBadge />
+                    <BetaBadge isBetaUser={isBetaUser} />
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

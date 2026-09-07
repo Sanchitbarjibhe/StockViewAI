@@ -10,7 +10,7 @@ const WaitlistSchema = new Schema({
         enum: ['BETA', 'LIVE'],
         default: 'BETA'
     },
-    isBetaUser: { type: Boolean, default: true },
+    isBetaUser: { type: Boolean, default: false },
     status: {
         type: String,
         enum: ['WAITING', 'INVITED', 'ACTIVE'],

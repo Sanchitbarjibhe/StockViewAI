@@ -1,7 +1,9 @@
-export default function BetaBadge() {
-    const isBeta = process.env.APP_ENV === 'dev' || process.env.NEXT_PUBLIC_APP_ENV === 'beta';
+interface BetaBadgeProps {
+    isBetaUser?: boolean;
+}
 
-    if (!isBeta) return null;
+export default function BetaBadge({ isBetaUser = false }: BetaBadgeProps) {
+    if (!isBetaUser) return null;
 
     return (
         <span

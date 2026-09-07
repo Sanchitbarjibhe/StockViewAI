@@ -28,6 +28,12 @@ const UserSchema = new Schema({
         enum: ['USER', 'ADMIN'],
         default: 'USER'
     },
+    isBetaUser: { type: Boolean, default: false },
+    betaStatus: {
+        type: String,
+        enum: ['NONE', 'INVITED', 'ACTIVE'],
+        default: 'NONE'
+    },
     aiProvider: {
         type: String,
         enum: ['gemini', 'claude', 'openai'],

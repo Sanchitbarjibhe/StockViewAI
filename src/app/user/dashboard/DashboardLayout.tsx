@@ -61,6 +61,7 @@ export default function DashboardLayout() {
     const isAuthenticated = status === 'authenticated';
     const userEmail = session?.user?.email ?? '';
     const userImage = session?.user?.image ?? '';
+    const isBetaUser = session?.user?.isBetaUser === true;
 
     const handleOpenAuth = () => {
         router.push('/login');
@@ -251,6 +252,7 @@ export default function DashboardLayout() {
                 isAuthenticated={isAuthenticated}
                 userEmail={userEmail}
                 userImage={userImage}
+                isBetaUser={isBetaUser}
                 onOpenAuth={handleOpenAuth}
                 onLogout={handleLogout}
             />

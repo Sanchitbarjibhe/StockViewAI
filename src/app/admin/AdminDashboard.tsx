@@ -10,6 +10,7 @@ interface Entry {
   email: string;
   phone: string;
   registeredAt: string;
+  betaStatus: 'NONE' | 'INVITED' | 'ACTIVE';
 }
 
 export default function AdminDashboard() {
@@ -18,6 +19,7 @@ export default function AdminDashboard() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState<string>('');
+  const [updatingEmail, setUpdatingEmail] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -45,6 +47,21 @@ export default function AdminDashboard() {
       fetchEntries();
     }
   }, [status]);
+
+  const updateBetaAccess = async (email: string, action: 'invite' | 'revoke') => {
+    setUpdatingEmail(email);
+    try {
+      const response = await fetch('/api/admin/entries', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, action }),
+      });
+      const data = await response.json();
+      if (data.success) await fetchEntries();
+    } finally {
+      setUpdatingEmail(null);
+    }
+  };
 
   // Filter based on search query
   const filteredEntries = entries.filter(
@@ -93,7 +110,7 @@ export default function AdminDashboard() {
               <h1 className="text-3xl font-extrabold text-white tracking-tight">
                 StockView <span className="text-emerald-400">AI Dashboard</span>
               </h1>
-              <BetaBadge />
+              <BetaBadge isBetaUser={session?.user?.isBetaUser === true} />
             </div>
             <p className="text-slate-400 text-sm mt-1">
               Monitor live MVP signups & waitlist entries.
@@ -150,19 +167,21 @@ export default function AdminDashboard() {
                   <th className="py-4 px-6">#</th>
                   <th className="py-4 px-6">Email Address</th>
                   <th className="py-4 px-6">Phone Number</th>
+                  <th className="py-4 px-6">Beta Access</th>
+                  <th className="py-4 px-6">Action</th>
                   <th className="py-4 px-6">Date Registered</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60">
                 {loading ? (
                   <tr>
-                    <td colSpan={4} className="text-center py-12 text-slate-500">
+                    <td colSpan={6} className="text-center py-12 text-slate-500">
                       Loading live entries...
                     </td>
                   </tr>
                 ) : filteredEntries.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="text-center py-12 text-slate-500">
+                    <td colSpan={6} className="text-center py-12 text-slate-500">
                       No matching records found.
                     </td>
                   </tr>
@@ -173,6 +192,20 @@ export default function AdminDashboard() {
                       <td className="py-4 px-6 font-medium text-slate-200">{item.email}</td>
                       <td className="py-4 px-6 font-mono text-slate-300">
                         {item.phone || <span className="text-slate-600">N/A</span>}
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className={item.betaStatus === 'ACTIVE' ? 'text-emerald-400' : item.betaStatus === 'INVITED' ? 'text-amber-300' : 'text-slate-500'}>
+                          {item.betaStatus}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <button
+                          onClick={() => updateBetaAccess(item.email, item.betaStatus === 'NONE' ? 'invite' : 'revoke')}
+                          disabled={updatingEmail === item.email}
+                          className="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+                        >
+                          {updatingEmail === item.email ? 'Saving...' : item.betaStatus === 'NONE' ? 'Invite beta' : 'Revoke'}
+                        </button>
                       </td>
                       <td className="py-4 px-6 text-slate-400 text-xs">
                         {new Date(item.registeredAt).toLocaleString('en-IN', {
