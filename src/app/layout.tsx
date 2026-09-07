@@ -4,11 +4,13 @@ import { Analytics } from "@vercel/analytics/next";
 import '@/app/globals.css'
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-const isLive = appSource === 'LIVE';
+// const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stockviewapp.vercel.app';
+const isBeta = appSource === 'BETA';
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewapp.vercel.app'),
+  // metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewapp.vercel.app'),
+  metadataBase: new URL(siteUrl),
   title: 'StockViewAI – AI Trading Terminal & Real-Time Market Analytics',
   description:
     'StockViewAI provides sub-second real-time market analytics, AI-powered stock screeners, institutional volume profiles, and NSE sectoral heatmaps for active traders.',
@@ -57,12 +59,36 @@ export const metadata: Metadata = {
     creator: '@stockview_7',
     images: ['https://stockviewapp.vercel.app/og-image.png'],
   },
-  robots: isLive
-    ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } }
-    : { index: false, follow: false },
-  ...(isLive && siteUrl
-    ? { alternates: { canonical: siteUrl } }
-    : {}),
+  // robots: isBeta
+  //   ? {
+  //     index: true, follow: true, googleBot:
+  //     {
+  //       index: true,
+  //       follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1
+  //     }
+  //   }
+  //   : { index: false, follow: false },
+  // ...(isBeta && siteUrl
+  //   ? { alternates: { canonical: siteUrl } }
+  //   : {}),
+  robots: isBeta
+    ? { index: false, follow: false } // Beta असेल तरच Google ब्लॉक करा
+    : {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+
+  // ✅ 3. Canonical Tag (नेहमी Main Domain साठी चालू राहील)
+  alternates: {
+    canonical: 'https://stockviewapp.vercel.app',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
