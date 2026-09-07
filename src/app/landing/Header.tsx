@@ -1,6 +1,7 @@
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
+import BetaBadge from '@/components/BetaBadge';
 
 interface HeaderProps {
     onOpenAuth: () => void;
@@ -15,6 +16,7 @@ export default function Header({ onOpenAuth }: HeaderProps) {
                     <h1 style={{ fontSize: '15px', fontWeight: '800', letterSpacing: '0.6px', margin: 0, color: '#F8FAFC' }}>
                         StockView<span style={{ color: '#22C55E' }}>AI</span>
                     </h1>
+                    <BetaBadge />
                 </div>
             </div>
             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>

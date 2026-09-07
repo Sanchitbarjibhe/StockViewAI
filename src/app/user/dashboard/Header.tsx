@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, LogOut, Mail, KeyRound } from 'lucide-react';
 import ApiSaveModal from '@/components/user/ApiSaveModal';
+import BetaBadge from '@/components/BetaBadge';
 interface HeaderProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -41,6 +42,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                     <h1 style={{ fontSize: '15px', fontWeight: '800', letterSpacing: '0.6px', margin: 0, color: '#F8FAFC' }}>
                         StockView<span style={{ color: '#22C55E' }}>AI</span>
                     </h1>
+                    <BetaBadge />
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
