@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import AuthProvider from "@/components/AuthProvider";
+import { Html, Head, Main, NextScript } from "next/document";
 import { Analytics } from "@vercel/analytics/next";
-import '@/app/globals.css'
+// import '@/app/globals.css'
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -67,15 +67,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
-    <html lang="en">
+    <Html lang="en">
+
+      <Head>
+        {/* Paste the exact HTML tag from Google Search Console here */}
+        <meta name="google-site-verification" content="sxf2UFrmFtm9jjVCv87FdMOoROhSTZiRM3GVDW9AcI0" />
+      </Head>
       <body className="min-h-screen bg-gray-50 flex flex-col">
-        <AuthProvider>
-          <Analytics />
-          <main className="flex-1 w-full relative z-10 min-h-screen flex-col justify-between scroll-area no-scrollbar">
-            {children}
-          </main>
-        </AuthProvider>
+        {/* <AuthProvider> */}
+        <Analytics />
+        <main className="flex-1 w-full relative z-10 min-h-screen flex-col justify-between scroll-area no-scrollbar">
+          {children}
+        </main>
+        {/* </AuthProvider> */}
+        <NextScript />
+        <Main />
       </body>
-    </html>
+    </Html>
   );
 }
