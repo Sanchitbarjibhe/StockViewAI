@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const NSE_BASE_URL = 'https://www.nseindia.com';
+const MARKET_DATA_REVALIDATE_SECONDS = 5 * 60;
 
 const headers = {
     'User-Agent':
@@ -12,7 +13,10 @@ const headers = {
 
 async function getNSECookies() {
     // 1. Session cookies मिळवण्यासाठी मुख्य साइटवर पहिली रिक्वेस्ट करणे
-    const response = await fetch(NSE_BASE_URL, { headers });
+    const response = await fetch(NSE_BASE_URL, {
+        headers,
+        next: { revalidate: MARKET_DATA_REVALIDATE_SECONDS },
+    });
     const rawCookies = response.headers.get('set-cookie');
 
     if (!rawCookies) return '';
@@ -31,14 +35,15 @@ export async function GET() {
         const cookies = await getNSECookies();
         const apiHeaders = { ...headers, 'Cookie': cookies };
 
-        // ⚡ Fast Performance साठी सर्व NSE endpoints समांतर (Parallelly) कॉल करणे
-        const responses = await Promise.all([
-            fetch('https://www.nseindia.com/api/allIndices', { headers: apiHeaders, next: { revalidate: 10 } }), // CORRECT API FOR SECTOR AND INDEX DATA
-        ]);
-
-        const [indicesData, gainersData, losersData, volumeGainersData, goldData] = await Promise.all(
-            responses.map(res => res.ok ? res.json() : null)
-        );
+        const indicesResponse = await fetch('https://www.nseindia.com/api/allIndices', {
+            headers: apiHeaders,
+            next: { revalidate: MARKET_DATA_REVALIDATE_SECONDS },
+        });
+        const indicesData = indicesResponse.ok ? await indicesResponse.json() : null;
+        const gainersData: any = null;
+        const losersData: any = null;
+        const volumeGainersData: any = null;
+        const goldData: any = null;
 
         const allIndices = indicesData?.data || [];
 

@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <form onSubmit={handleSearch} className="header-form" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <div className="top-search-container" style={{ position: 'relative', width: '200px', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
+                        {/* <div className="top-search-container" style={{ position: 'relative', width: '200px', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
                             <Search style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', width: '13px', height: '13px', color: '#64748B' }} />
                             <input
                                 type="text"
@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                         </div>
                         <button type="submit" style={{ padding: '6px 12px', cursor: 'pointer', backgroundColor: '#22C55E', color: '#0B0F17', border: 'none', borderRadius: '8px', fontSize: '10px', fontWeight: '800' }}>
                             SEARCH
-                        </button>
+                        </button> */}
                     </form>
 
 

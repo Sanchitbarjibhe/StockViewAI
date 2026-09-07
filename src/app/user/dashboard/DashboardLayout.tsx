@@ -154,7 +154,7 @@ export default function DashboardLayout() {
 
     useEffect(() => {
         fetchMarketData();
-        const interval = window.setInterval(fetchMarketData, 10000);
+        const interval = window.setInterval(fetchMarketData, 5 * 60 * 1000);
         return () => window.clearInterval(interval);
     }, [fetchMarketData]);
 
