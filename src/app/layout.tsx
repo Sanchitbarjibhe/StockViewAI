@@ -1,93 +1,130 @@
 import type { Metadata } from "next";
-import { Html, Head, Main, NextScript } from "next/document";
-import { Analytics } from "@vercel/analytics/next";
-// import '@/app/globals.css'
+import { Head, Html, Main, NextScript } from "next/document";
+import '../app/style.css'
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
-<<<<<<< Updated upstream
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const isLive = appSource === 'LIVE';
-=======
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stockviewapp.vercel.app';
-const isBeta = appSource === 'BETA';
->>>>>>> Stashed changes
 
+// ✅ SEO Metadata Config
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewapp.vercel.app'),
+  metadataBase: new URL('https://stockviewapp.vercel.app'),
   title: 'StockViewAI – AI Trading Terminal & Real-Time Market Analytics',
   description:
     'StockViewAI provides sub-second real-time market analytics, AI-powered stock screeners, institutional volume profiles, and NSE sectoral heatmaps for active traders.',
   keywords: [
-    'AI trading terminal',
-    'institutional grade trading tools',
-    'stock market screener India',
-    'algo trading software',
-    'AI powered stock analysis',
-    'real time stock charts',
-    'portfolio analytics tool',
-    'equity research platform',
-    'machine learning stock predictions',
-    'best stock screener India',
-    'AI trading terminal for retail investors',
     'StockViewAI',
+    'AI trading terminal',
+    'stock market screener India',
+    'real time stock charts',
+    'smart money flow tracker',
+    'NSE sectoral heatmap',
+    'option chain PCR',
   ],
   authors: [{ name: 'StockViewAI Team' }],
-  creator: 'StockViewAI',
-  publisher: 'StockViewAI',
-  verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://stockviewapp.vercel.app',
   },
   openGraph: {
-    title: 'StockViewAI – AI-Powered Institutional Market Analytics',
+    title: 'StockViewAI – Next-Gen Market Intelligence Terminal',
     description:
-      'Track smart money flow, real-time sectoral heatmaps, and machine learning stock predictions with sub-second performance.',
+      'Sub-second institutional market signals powered by AI architecture.',
     url: 'https://stockviewapp.vercel.app',
     siteName: 'StockViewAI',
-    images: [
-      {
-        url: 'https://stockviewapp.vercel.app/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'StockViewAI Terminal Dashboard Preview',
-      },
-    ],
     locale: 'en_IN',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'StockViewAI – Next-Gen AI Market Analytics',
-    description:
-      'Institutional-grade AI trading terminal designed for active retail traders in India.',
-    creator: '@stockview_7',
-    images: ['https://stockviewapp.vercel.app/og-image.png'],
-  },
-  robots: isLive
-    ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } }
-    : { index: false, follow: false },
-  ...(isLive && siteUrl
-    ? { alternates: { canonical: siteUrl } }
-    : {}),
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode; }) {
-  return (
-    <Html lang="en">
+export default function Home() {
+  const betaLink = 'https://stockviewai-beta.vercel.app';
 
-      <Head>
-        {/* Paste the exact HTML tag from Google Search Console here */}
-        <meta name="google-site-verification" content="sxf2UFrmFtm9jjVCv87FdMOoROhSTZiRM3GVDW9AcI0" />
-      </Head>
-      <body className="min-h-screen bg-gray-50 flex flex-col">
-        {/* <AuthProvider> */}
-        <Analytics />
-        <main className="flex-1 w-full relative z-10 min-h-screen flex-col justify-between scroll-area no-scrollbar">
-          {children}
-        </main>
-        {/* </AuthProvider> */}
-        <NextScript />
-        <Main />
-      </body>
-    </Html>
+  return (
+    <main className="page-container">
+      {/* Background Decorative Glow */}
+      <div className="bg-glow" />
+
+      {/* Header / Logo Section */}
+      <header className="header-wrapper">
+        <div className="brand-box">
+          <div className="logo-icon">S</div>
+          <span className="logo-text">
+            StockView<span className="highlight-cyan">AI</span>
+          </span>
+        </div>
+
+        <span className="badge-beta">Beta Live</span>
+      </header>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="tag-badge">
+          <span className="dot-ping" />
+          <span>Institutional Market Analytics & Signal Terminal</span>
+        </div>
+
+        <h1 className="hero-title">
+          Next-Gen AI Terminal for <br />
+          <span className="title-gradient">Active Market Traders</span>
+        </h1>
+
+        <p className="hero-desc">
+          Access sub-second NSE sectoral heatmaps, Smart Money volume profile trackers, Option Chain PCR analysis, and automated market signals.
+        </p>
+
+        {/* CTA Button */}
+        <div>
+          <a
+            href={betaLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-cta"
+          >
+            <span>Try Beta Version</span>
+            <svg
+              style={{ width: '20px', height: '20px' }}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+        {/* Feature Highlights Grid */}
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-heading">Sub-Second Tape</div>
+            <p className="feature-text">Real-time market analytics and smart money flow detection.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-heading">Sectoral Heatmaps</div>
+            <p className="feature-text">Track NSE sector strength and relative momentum live.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-heading">AI Signals</div>
+            <p className="feature-text">Institutional volume profile and option chain PCR insights.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer-wrapper">
+        <p>© {new Date().getFullYear()} StockViewAI. All rights reserved.</p>
+        <p>Designed for NSE NIFTY & BankNifty Traders</p>
+      </footer>
+    </main>
   );
 }

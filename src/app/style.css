@@ -1,0 +1,225 @@
+body {
+    margin: 0;
+}
+
+/* Custom CSS for Main Landing Page */
+.page-container {
+    min-height: 100vh;
+    background-color: #020617;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-sizing: border-box;
+    position: relative;
+}
+
+@media (min-width: 640px) {
+    .page-container {
+        padding: 48px;
+    }
+}
+
+/* Background Glow */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0, transparent 100%);
+    pointer-events: none;
+}
+
+/* Header */
+.header-wrapper {
+    max-width: 1152px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.brand-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 8px;
+    background-color: #06b6d4;
+    color: #020617;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(to right, #ffffff, #e2e8f0, #94a3b8);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.highlight-cyan {
+    color: #22d3ee;
+}
+
+.badge-beta {
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 9999px;
+    background-color: rgba(6, 182, 212, 0.1);
+    color: #22d3ee;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* Hero Section */
+.hero-section {
+    max-width: 896px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding: 64px 0;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    font-size: 12px;
+    color: #cbd5e1;
+    margin-bottom: 32px;
+}
+
+.dot-ping {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #22d3ee;
+}
+
+.hero-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+@media (min-width: 640px) {
+    .hero-title {
+        font-size: 60px;
+    }
+}
+
+.title-gradient {
+    background: linear-gradient(to right, #22d3ee, #7dd3fc, #3b82f6);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero-desc {
+    color: #94a3b8;
+    font-size: 16px;
+    max-width: 672px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* CTA Button */
+.btn-cta {
+    padding: 16px 32px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #06b6d4, #2563eb);
+    color: #020617;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+    transition: opacity 0.2s;
+}
+
+.btn-cta:hover {
+    opacity: 0.9;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 64px;
+    width: 100%;
+    text-align: left;
+}
+
+@media (min-width: 640px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.feature-card {
+    padding: 20px;
+    border-radius: 16px;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.feature-heading {
+    color: #22d3ee;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.feature-text {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Footer */
+.footer-wrapper {
+    max-width: 1152px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid #0f172a;
+    padding-top: 24px;
+    position: relative;
+    z-index: 10;
+}
+
+@media (min-width: 640px) {
+    .footer-wrapper {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
