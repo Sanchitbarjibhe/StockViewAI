@@ -4,8 +4,13 @@ import { Analytics } from "@vercel/analytics/next";
 // import '@/app/globals.css'
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
+<<<<<<< Updated upstream
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const isLive = appSource === 'LIVE';
+=======
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stockviewapp.vercel.app';
+const isBeta = appSource === 'BETA';
+>>>>>>> Stashed changes
 
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewapp.vercel.app'),
