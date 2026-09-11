@@ -4,14 +4,16 @@ import { Analytics } from "@vercel/analytics/next";
 import '@/app/globals.css'
 
 const appSource = process.env.NEXT_PUBLIC_APP_SOURCE;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-const isLive = appSource === 'LIVE';
+// const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://stockviewai-beta.vercel.app';
+const isBeta = appSource === 'BETA';
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewapp.vercel.app'),
+  // metadataBase: siteUrl ? new URL(siteUrl) : new URL('https://stockviewai-beta.vercel.app'),
+  metadataBase: new URL(siteUrl),
   title: 'StockViewAI – AI Trading Terminal & Real-Time Market Analytics',
   description:
-    'StockViewAI provides sub-second real-time market analytics, AI-powered stock screeners, institutional volume profiles, and NSE sectoral heatmaps for active traders.',
+    'Sub-second real-time market analytics, AI-powered stock screeners, institutional volume profile algorithms, and NSE sectoral heatmaps for active traders in India.',
   keywords: [
     'AI trading terminal',
     'institutional grade trading tools',
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
     'AI trading terminal for retail investors',
     'StockViewAI',
   ],
-  authors: [{ name: 'StockViewAI Team' }],
+  authors: [{ name: 'StockViewAI' }],
   creator: 'StockViewAI',
   publisher: 'StockViewAI',
   verification: {
@@ -35,12 +37,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'StockViewAI – AI-Powered Institutional Market Analytics',
     description:
-      'Track smart money flow, real-time sectoral heatmaps, and machine learning stock predictions with sub-second performance.',
-    url: 'https://stockviewapp.vercel.app',
+      'Track live smart money movements, option chain PCR, and AI stock predictions with a high-performance dark-themed terminal.',
+    url: siteUrl,
     siteName: 'StockViewAI',
     images: [
       {
-        url: 'https://stockviewapp.vercel.app/og-image.png',
+        url: `${siteUrl}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: 'StockViewAI Terminal Dashboard Preview',
@@ -53,16 +55,27 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'StockViewAI – Next-Gen AI Market Analytics',
     description:
-      'Institutional-grade AI trading terminal designed for active retail traders in India.',
+      'Sub-second AI market analysis and institutional-grade trading tools for retail investors.',
     creator: '@stockview_7',
-    images: ['https://stockviewapp.vercel.app/og-image.png'],
+    images: [`${siteUrl}/opengraph-image`],
   },
-  robots: isLive
-    ? { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } }
-    : { index: false, follow: false },
-  ...(isLive && siteUrl
-    ? { alternates: { canonical: siteUrl } }
-    : {}),
+  robots: isBeta
+    ? { index: false, follow: false }
+    : {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode; }) {

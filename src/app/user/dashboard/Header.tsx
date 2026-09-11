@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, LogOut, Mail, KeyRound } from 'lucide-react';
 import ApiSaveModal from '@/components/user/ApiSaveModal';
+import BetaBadge from '@/components/BetaBadge';
 interface HeaderProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -8,11 +9,12 @@ interface HeaderProps {
     isAuthenticated: boolean;
     userEmail?: string;
     userImage?: string;
+    isBetaUser?: boolean;
     onOpenAuth: () => void;
     onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSearch, isAuthenticated, userEmail, userImage, onOpenAuth, onLogout }) => {
+const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSearch, isAuthenticated, userEmail, userImage, isBetaUser, onOpenAuth, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
@@ -41,11 +43,12 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                     <h1 style={{ fontSize: '15px', fontWeight: '800', letterSpacing: '0.6px', margin: 0, color: '#F8FAFC' }}>
                         StockView<span style={{ color: '#22C55E' }}>AI</span>
                     </h1>
+                    <BetaBadge isBetaUser={isBetaUser} />
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <form onSubmit={handleSearch} className="header-form" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <div className="top-search-container" style={{ position: 'relative', width: '200px', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
+                        {/* <div className="top-search-container" style={{ position: 'relative', width: '200px', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>
                             <Search style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', width: '13px', height: '13px', color: '#64748B' }} />
                             <input
                                 type="text"
@@ -57,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, handleSear
                         </div>
                         <button type="submit" style={{ padding: '6px 12px', cursor: 'pointer', backgroundColor: '#22C55E', color: '#0B0F17', border: 'none', borderRadius: '8px', fontSize: '10px', fontWeight: '800' }}>
                             SEARCH
-                        </button>
+                        </button> */}
                     </form>
 
 

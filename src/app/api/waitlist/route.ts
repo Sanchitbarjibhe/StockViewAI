@@ -35,7 +35,7 @@ export async function POST(request: Request) {
             phone,
             broker: broker || 'Other',
             environment: currentEnv,                // 🟢 DB Schema नुसार 'BETA' किंवा 'LIVE'
-            isBetaUser: currentEnv === 'BETA',     // 🟢 Beta वरून आला तर true, Live वरून false
+            isBetaUser: false,
             status: 'WAITING'
         });
 

@@ -61,6 +61,7 @@ export default function DashboardLayout() {
     const isAuthenticated = status === 'authenticated';
     const userEmail = session?.user?.email ?? '';
     const userImage = session?.user?.image ?? '';
+    const isBetaUser = session?.user?.isBetaUser === true;
 
     const handleOpenAuth = () => {
         router.push('/login');
@@ -154,7 +155,7 @@ export default function DashboardLayout() {
 
     useEffect(() => {
         fetchMarketData();
-        const interval = window.setInterval(fetchMarketData, 10000);
+        const interval = window.setInterval(fetchMarketData, 5 * 60 * 1000);
         return () => window.clearInterval(interval);
     }, [fetchMarketData]);
 
@@ -251,6 +252,7 @@ export default function DashboardLayout() {
                 isAuthenticated={isAuthenticated}
                 userEmail={userEmail}
                 userImage={userImage}
+                isBetaUser={isBetaUser}
                 onOpenAuth={handleOpenAuth}
                 onLogout={handleLogout}
             />
